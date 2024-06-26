@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import * as login_client from "../(clients)/login_client";
 import { redirect } from "next/navigation";
+import { jwtDecode } from "jwt-decode";
 
 export default async function Login() {
   async function validateLogin(formData) {
@@ -16,8 +17,10 @@ export default async function Login() {
     const res_body = await response.json();
 
     if (response.status == 200) {
-      cookies().set("auth-crs", res_body["token"]);
-      redirect("/profile");
+      const token = res_body["token"];
+      cookies().set("auth-crs", "Bearer " + token);
+      const decoded_token = jwtDecode(token);
+      redirect("/" + decoded_token["user_type"].toLowerCase());
     } else {
       redirect("/login");
     }
