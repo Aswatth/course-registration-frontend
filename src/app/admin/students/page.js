@@ -1,3 +1,4 @@
+import * as utils from "../../(utils)/auth";
 import * as admin_client from "../../(clients)/admin_client";
 import StudentList from "./student_list";
 
@@ -12,6 +13,9 @@ export default async function StudentsPage() {
       return null;
     }
   };
+
+  utils.checkAuth();
+
   return (
     <div>
       Students page
