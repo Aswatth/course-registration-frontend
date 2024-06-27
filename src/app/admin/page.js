@@ -16,6 +16,7 @@ export default function AdminHome() {
   return (
     <div>
       <Link href={"/admin/students"}>Students</Link>
+      <Link href={"/admin/professors"}>Professors</Link>
     </div>
   );
 }

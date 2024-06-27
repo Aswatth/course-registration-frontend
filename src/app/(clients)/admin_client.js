@@ -16,3 +16,17 @@ export const GetAllStudents = async () => {
     console.log("UNABLE TO FETCH ALL STUDENT DATA");
   }
 };
+
+export const GetAllProfessors = async () => {
+  try {
+    const response = await fetch(API + "/professors", {
+      method: "GET",
+      headers: {
+        Authorization: cookies().get(COOKIE_NAME).value,
+      },
+    });
+    return response;
+  } catch {
+    console.log("UNABLE TO FETCH ALL PROFESSOR DATA");
+  }
+};
