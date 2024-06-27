@@ -18,7 +18,7 @@ export default async function Login() {
 
     if (response.status == 200) {
       const token = res_body["token"];
-      cookies().set("auth-crs", "Bearer " + token);
+      cookies().set(process.env.NEXT_PUBLIC_COOKIE_NAME, "Bearer " + token);
       const decoded_token = jwtDecode(token);
       redirect("/" + decoded_token["user_type"].toLowerCase());
     } else {
