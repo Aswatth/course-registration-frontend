@@ -1,3 +1,4 @@
+"use server";
 import { cookies } from "next/headers";
 
 const API = process.env.NEXT_PUBLIC_API + "/admin";
@@ -28,5 +29,19 @@ export const GetAllProfessors = async () => {
     return response;
   } catch {
     console.log("UNABLE TO FETCH ALL PROFESSOR DATA");
+  }
+};
+
+export const DeleteProfessor = async (professor_email_id) => {
+  try {
+    const response = await fetch(API + "/professors/" + professor_email_id, {
+      method: "DELETE",
+      headers: {
+        Authorization: cookies().get(COOKIE_NAME).value,
+      },
+    });
+    return response;
+  } catch {
+    console.log("UNABLE TO DELETE PROFESSOR DATA");
   }
 };

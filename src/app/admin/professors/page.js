@@ -1,25 +1,65 @@
+"use client";
+import { useEffect, useState } from "react";
 import * as utils from "../../(utils)/auth";
-import * as admin_client from "../../(clients)/admin_client";
-import ProfessorList from "./professor_list";
+import * as admin_actions from "@/app/admin/professors/actions";
 
-export default async function ProfessorsPage() {
-  const getProfessors = async () => {
-    const respone = await admin_client.GetAllProfessors();
+export default function ProfessorsPage() {
+  const [professor_list, setProfessorList] = useState([]);
 
-    if (respone.status == 200) {
-      const body = await respone.json();
-      return body;
-    } else {
-      return null;
-    }
-  };
-
-  utils.checkAuth();
+  useEffect(() => {
+    utils.checkAuth().then(() => {
+      admin_actions.getProfessors().then((value) => {
+        setProfessorList(value);
+      });
+    });    
+  }, []);
 
   return (
     <div>
-      Students page
-      <ProfessorList professor_list={await getProfessors()} />
+      Professor page
+      <table>
+        <thead>
+          <tr>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Email Id</th>
+            <th>Designation</th>
+            <th>Department</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {professor_list.map((m) => {
+            return (
+              <tr>
+                <td>{m.first_name}</td>
+                <td>{m.last_name}</td>
+                <td>{m.email_id}</td>
+                <td>{m.designation}</td>
+                <td>{m.department}</td>
+                <td>
+                  <button
+                    onClick={() => {
+                      console.log("editing");
+                    }}
+                  >
+                    EDIT
+                  </button>
+                </td>
+                <td>
+                  <button
+                    onClick={() => {
+                      console.log("deleting");
+                    }}
+                  >
+                    DELETE
+                  </button>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
     </div>
   );
 }
