@@ -1,22 +1,36 @@
 "use client";
 import { useEffect, useState } from "react";
 import * as utils from "../../(utils)/auth";
-import * as admin_actions from "@/app/admin/professors/actions";
+import * as admin_client from "@/app/(clients)/admin/professor_client";
 
 export default function ProfessorsPage() {
   const [professor_list, setProfessorList] = useState([]);
 
   useEffect(() => {
     utils.checkAuth().then(() => {
-      admin_actions.getProfessors().then((value) => {
-        setProfessorList(value);
+      admin_client.GetAllProfessors().then((value) => {
+        if (value != null) {
+          setProfessorList(value);
+        } else {
+        }
       });
-    });    
+    });
   }, []);
 
-  return (
-    <div>
-      Professor page
+  const delete_professor = async (professor_email_id) => {
+    admin_client.DeleteProfessor(professor_email_id).then(() => {
+      setProfessorList(
+        professor_list.filter((f) => f.email_id != professor_email_id)
+      );
+    });
+  };
+
+  const no_content = () => {
+    return <div>No content</div>;
+  };
+
+  const professor_content = () => {
+    return (
       <table>
         <thead>
           <tr>
@@ -38,20 +52,10 @@ export default function ProfessorsPage() {
                 <td>{m.designation}</td>
                 <td>{m.department}</td>
                 <td>
-                  <button
-                    onClick={() => {
-                      console.log("editing");
-                    }}
-                  >
-                    EDIT
-                  </button>
+                  <button onClick={() => {}}>EDIT</button>
                 </td>
                 <td>
-                  <button
-                    onClick={() => {
-                      console.log("deleting");
-                    }}
-                  >
+                  <button onClick={() => delete_professor(m.email_id)}>
                     DELETE
                   </button>
                 </td>
@@ -60,6 +64,13 @@ export default function ProfessorsPage() {
           })}
         </tbody>
       </table>
+    );
+  };
+
+  return (
+    <div>
+      Professor page
+      {professor_list.length == 0 ? no_content() : professor_content()}
     </div>
   );
 }

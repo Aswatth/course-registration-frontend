@@ -1,25 +1,73 @@
+"use client";
+import { useEffect, useState } from "react";
 import * as utils from "../../(utils)/auth";
-import * as admin_client from "../../(clients)/admin_client";
-import StudentList from "./student_list";
+import * as admin_client from "@/app/(clients)/admin/student_client";
 
-export default async function StudentsPage() {
-  const getStudents = async () => {
-    const respone = await admin_client.GetAllStudents();
+export default function StudentPage() {
+  const [student_list, setStudentList] = useState([]);
 
-    if (respone.status == 200) {
-      const body = await respone.json();
-      return body;
-    } else {
-      return null;
-    }
+  useEffect(() => {
+    utils.checkAuth().then(() => {
+      admin_client.GetAllStudents().then((value) => {
+        if (value != null) {
+          setStudentList(value);
+        } else {
+        }
+      });
+    });
+  }, []);
+
+  const delete_student = async (student_email_id) => {
+    admin_client.DeleteStudent(student_email_id).then(() => {
+      setStudentList(
+        student_list.filter((f) => f.email_id != student_email_id)
+      );
+    });
   };
 
-  utils.checkAuth();
+  const no_content = () => {
+    return <div>No content</div>;
+  };
+
+  const student_content = () => {
+    return (
+      <table>
+        <thead>
+          <tr>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Email Id</th>
+            <th>Program enrolled</th>
+          </tr>
+        </thead>
+        <tbody>
+          {student_list.map((m) => {
+            return (
+              <tr>
+                <td>{m.first_name}</td>
+                <td>{m.last_name}</td>
+                <td>{m.email_id}</td>
+                <td>{m.program_enrolled}</td>
+                <td>
+                  <button onClick={() => {}}>EDIT</button>
+                </td>
+                <td>
+                  <button onClick={() => delete_student(m.email_id)}>
+                    DELETE
+                  </button>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    );
+  };
 
   return (
     <div>
-      Students page
-      <StudentList student_list={await getStudents()} />
+      student page
+      {student_list.length == 0 ? no_content() : student_content()}
     </div>
   );
 }
