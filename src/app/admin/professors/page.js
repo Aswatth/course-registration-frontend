@@ -2,10 +2,12 @@
 import { useEffect, useState } from "react";
 import * as utils from "../../(utils)/auth";
 import * as admin_client from "@/app/(clients)/admin/professor_client";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function ProfessorsPage() {
+  const router = useRouter();
   const [professor_list, setProfessorList] = useState([]);
-
   useEffect(() => {
     utils.checkAuth().then(() => {
       admin_client.GetAllProfessors().then((value) => {
@@ -52,7 +54,13 @@ export default function ProfessorsPage() {
                 <td>{m.designation}</td>
                 <td>{m.department}</td>
                 <td>
-                  <button onClick={() => {}}>EDIT</button>
+                  <button
+                    onClick={() =>
+                      router.push("/admin/professors/edit/" + m.email_id)
+                    }
+                  >
+                    Edit
+                  </button>
                 </td>
                 <td>
                   <button onClick={() => delete_professor(m.email_id)}>
