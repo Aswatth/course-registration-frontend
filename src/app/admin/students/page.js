@@ -2,8 +2,10 @@
 import { useEffect, useState } from "react";
 import * as utils from "../../(utils)/auth";
 import * as admin_client from "@/app/(clients)/admin/student_client";
+import { useRouter } from "next/navigation";
 
 export default function StudentPage() {
+  const router = useRouter();
   const [student_list, setStudentList] = useState([]);
 
   useEffect(() => {
@@ -11,7 +13,6 @@ export default function StudentPage() {
       admin_client.GetAllStudents().then((value) => {
         if (value != null) {
           setStudentList(value);
-        } else {
         }
       });
     });
@@ -38,6 +39,7 @@ export default function StudentPage() {
             <th>Last name</th>
             <th>Email Id</th>
             <th>Program enrolled</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -49,7 +51,13 @@ export default function StudentPage() {
                 <td>{m.email_id}</td>
                 <td>{m.program_enrolled}</td>
                 <td>
-                  <button onClick={() => {}}>EDIT</button>
+                  <button
+                    onClick={() =>
+                      router.push("/admin/students/edit/" + m.email_id)
+                    }
+                  >
+                    Edit
+                  </button>
                 </td>
                 <td>
                   <button onClick={() => delete_student(m.email_id)}>
