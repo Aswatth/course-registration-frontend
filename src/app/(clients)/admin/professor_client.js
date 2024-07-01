@@ -4,6 +4,21 @@ import { cookies } from "next/headers";
 const API = process.env.NEXT_PUBLIC_API + "/admin";
 const COOKIE_NAME = process.env.NEXT_PUBLIC_COOKIE_NAME;
 
+export const CreateProfessor = async (professor_data) => {
+  try {
+    const response = await fetch(API + "/professors", {
+      method: "POST",
+      body: JSON.stringify(professor_data),
+      headers: {
+        Authorization: cookies().get(COOKIE_NAME).value,
+      },
+    });
+    return response.status;
+  } catch {
+    console.log("UNABLE TO CREATE NEW PROFESSOR PROFILE");
+  }
+};
+
 export const GetAllProfessors = async () => {
   var body = null;
   try {
@@ -67,7 +82,7 @@ export const DeleteProfessor = async (professor_email_id) => {
         Authorization: cookies().get(COOKIE_NAME).value,
       },
     });
-    if (response.status == 200) {
+    if (response.status != 200) {
       throw Error();
     }
   } catch {

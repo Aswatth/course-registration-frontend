@@ -4,6 +4,21 @@ import { cookies } from "next/headers";
 const API = process.env.NEXT_PUBLIC_API + "/admin";
 const COOKIE_NAME = process.env.NEXT_PUBLIC_COOKIE_NAME;
 
+export const CreateStudent = async (student_data) => {
+  try {
+    const response = await fetch(API + "/students", {
+      method: "POST",
+      body: JSON.stringify(student_data),
+      headers: {
+        Authorization: cookies().get(COOKIE_NAME).value,
+      },
+    });
+    return response.status;
+  } catch {
+    console.log("UNABLE TO UPDATE STUDENT DATA");
+  }
+};
+
 export const GetAllStudents = async () => {
   var body = null;
   try {
@@ -41,7 +56,6 @@ export const GetStudent = async (email_id) => {
 };
 
 export const UpdateStudent = async (student_data) => {
-  var body = null;
   try {
     const response = await fetch(API + "/students/" + student_data.email_id, {
       method: "PUT",
@@ -64,7 +78,7 @@ export const DeleteStudent = async (student_email_id) => {
         Authorization: cookies().get(COOKIE_NAME).value,
       },
     });
-    if (response.status == 200) {
+    if (response.status != 200) {
       throw Error();
     }
   } catch {

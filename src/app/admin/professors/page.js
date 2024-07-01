@@ -32,45 +32,54 @@ export default function ProfessorsPage() {
 
   const professor_content = () => {
     return (
-      <table>
-        <thead>
-          <tr>
-            <th>First name</th>
-            <th>Last name</th>
-            <th>Email Id</th>
-            <th>Designation</th>
-            <th>Department</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {professor_list.map((m) => {
-            return (
-              <tr>
-                <td>{m.first_name}</td>
-                <td>{m.last_name}</td>
-                <td>{m.email_id}</td>
-                <td>{m.designation}</td>
-                <td>{m.department}</td>
-                <td>
-                  <button
-                    onClick={() =>
-                      router.push("/admin/professors/edit/" + m.email_id)
-                    }
-                  >
-                    Edit
-                  </button>
-                </td>
-                <td>
-                  <button onClick={() => delete_professor(m.email_id)}>
-                    DELETE
-                  </button>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <div>
+        <button
+          onClick={() => {
+            router.push("/admin/professors/add");
+          }}
+        >
+          Add new professor
+        </button>
+        <table>
+          <thead>
+            <tr>
+              <th>First name</th>
+              <th>Last name</th>
+              <th>Email Id</th>
+              <th>Designation</th>
+              <th>Department</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {professor_list.map((m) => {
+              return (
+                <tr>
+                  <td>{m.first_name}</td>
+                  <td>{m.last_name}</td>
+                  <td>{m.email_id}</td>
+                  <td>{m.designation}</td>
+                  <td>{m.department}</td>
+                  <td>
+                    <button
+                      onClick={() =>
+                        router.push("/admin/professors/edit/" + m.email_id)
+                      }
+                    >
+                      Edit
+                    </button>
+                  </td>
+                  <td>
+                    <button onClick={() => delete_professor(m.email_id)}>
+                      DELETE
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     );
   };
 

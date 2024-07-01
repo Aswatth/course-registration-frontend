@@ -32,43 +32,46 @@ export default function StudentPage() {
 
   const student_content = () => {
     return (
-      <table>
-        <thead>
-          <tr>
-            <th>First name</th>
-            <th>Last name</th>
-            <th>Email Id</th>
-            <th>Program enrolled</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {student_list.map((m) => {
-            return (
-              <tr>
-                <td>{m.first_name}</td>
-                <td>{m.last_name}</td>
-                <td>{m.email_id}</td>
-                <td>{m.program_enrolled}</td>
-                <td>
-                  <button
-                    onClick={() =>
-                      router.push("/admin/students/edit/" + m.email_id)
-                    }
-                  >
-                    Edit
-                  </button>
-                </td>
-                <td>
-                  <button onClick={() => delete_student(m.email_id)}>
-                    DELETE
-                  </button>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <div>
+        <button onClick={() => {router.push("/admin/students/add")}}>Add new student</button>
+        <table>
+          <thead>
+            <tr>
+              <th>First name</th>
+              <th>Last name</th>
+              <th>Email Id</th>
+              <th>Program enrolled</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {student_list.map((m) => {
+              return (
+                <tr>
+                  <td>{m.first_name}</td>
+                  <td>{m.last_name}</td>
+                  <td>{m.email_id}</td>
+                  <td>{m.program_enrolled}</td>
+                  <td>
+                    <button
+                      onClick={() =>
+                        router.push("/admin/students/edit/" + m.email_id)
+                      }
+                    >
+                      Edit
+                    </button>
+                  </td>
+                  <td>
+                    <button onClick={() => delete_student(m.email_id)}>
+                      DELETE
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     );
   };
 
