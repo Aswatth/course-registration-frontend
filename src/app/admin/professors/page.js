@@ -13,7 +13,6 @@ export default function ProfessorsPage() {
       admin_client.GetAllProfessors().then((value) => {
         if (value != null) {
           setProfessorList(value);
-        } else {
         }
       });
     });
