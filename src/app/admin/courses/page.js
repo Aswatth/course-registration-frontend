@@ -49,7 +49,13 @@ export default function CoursePage() {
               <td>{m.credits}</td>
               <td>{m.department}</td>
               <td>
-                <button>Edit</button>
+                <button
+                  onClick={() =>
+                    router.push("/admin/courses/edit/" + m.course_id)
+                  }
+                >
+                  Edit
+                </button>
                 <button onClick={() => deleteCourse(m.course_id)}>
                   Delete
                 </button>
