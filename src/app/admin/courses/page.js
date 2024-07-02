@@ -17,6 +17,16 @@ export default function CoursePage() {
     });
   }, []);
 
+  function deleteCourse(course_id) {
+    admin_client.DeleteCourse(course_id).then((status) => {
+      if (status == 200) {
+        setCourseList(course_list.filter((f) => f.course_id != course_id));
+      } else {
+        alert("Error occured while deleting course");
+      }
+    });
+  }
+
   return (
     <div>
       Course page <br></br>
@@ -40,7 +50,9 @@ export default function CoursePage() {
               <td>{m.department}</td>
               <td>
                 <button>Edit</button>
-                <button>Delete</button>
+                <button onClick={() => deleteCourse(m.course_id)}>
+                  Delete
+                </button>
               </td>
             </tr>
           );

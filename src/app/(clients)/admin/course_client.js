@@ -34,7 +34,22 @@ export const CreateCourse = async (new_course) => {
     });
     return response.status;
   } catch {
-    console.log("UNABLE TO FETCH ALL COURSE DATA");
+    console.log("UNABLE TO CREATE NEW COURSE");
+  }
+  return null;
+};
+
+export const DeleteCourse = async (course_id) => {
+  try {
+    const response = await fetch(API + "/courses/" + course_id, {
+      method: "DELETE",
+      headers: {
+        Authorization: cookies().get(COOKIE_NAME).value,
+      },
+    });
+    return response.status;
+  } catch {
+    console.log("UNABLE TO DELETE COURSE DATA");
   }
   return null;
 };
