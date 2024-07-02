@@ -6,8 +6,9 @@ export default function AdminHome() {
 
   return (
     <div>
-      <Link href={"/admin/students"}>Students</Link>
-      <Link href={"/admin/professors"}>Professors</Link>
+      <Link href={"/admin/students"}>Students</Link><br></br>
+      <Link href={"/admin/professors"}>Professors</Link><br></br>
+      <Link href={"/admin/courses"}>Courses</Link><br></br>
     </div>
   );
 }
