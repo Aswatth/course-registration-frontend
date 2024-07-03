@@ -1,15 +1,17 @@
 "use client";
 import { useEffect, useState } from "react";
-import * as utils from "../../(utils)/auth";
+import * as utils from "@/app/(utils)/auth";
 import * as admin_client from "@/app/(clients)/admin/student_client";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 export default function StudentPage() {
   const router = useRouter();
+  const params = useParams();
   const [student_list, setStudentList] = useState([]);
 
   useEffect(() => {
-    utils.checkAuth().then(() => {
+    const email_id = decodeURIComponent(params.email_id);
+    utils.checkAuth("ADMIN", email_id).then(() => {
       admin_client.GetAllStudents().then((value) => {
         if (value != null) {
           setStudentList(value);
@@ -33,7 +35,13 @@ export default function StudentPage() {
   const student_content = () => {
     return (
       <div>
-        <button onClick={() => {router.push("/admin/students/add")}}>Add new student</button>
+        <button
+          onClick={() => {
+            router.push("students/add");
+          }}
+        >
+          Add new student
+        </button>
         <table>
           <thead>
             <tr>
@@ -54,9 +62,7 @@ export default function StudentPage() {
                   <td>{m.program_enrolled}</td>
                   <td>
                     <button
-                      onClick={() =>
-                        router.push("/admin/students/edit/" + m.email_id)
-                      }
+                      onClick={() => router.push("students/edit/" + m.email_id)}
                     >
                       Edit
                     </button>

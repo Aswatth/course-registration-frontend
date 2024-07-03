@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import * as admin_client from "../../../(clients)/admin/professor_client";
+import * as admin_client from "@/app/(clients)/admin/professor_client";
 
 import { useState } from "react";
 

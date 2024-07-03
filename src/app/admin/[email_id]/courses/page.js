@@ -1,14 +1,16 @@
 "use client";
 import { useEffect, useState } from "react";
-import * as utils from "../../(utils)/auth";
-import * as admin_client from "../../(clients)/admin/course_client";
-import { useRouter } from "next/navigation";
+import * as utils from "@/app/(utils)/auth";
+import * as admin_client from "@/app/(clients)/admin/course_client";
+import { useParams, useRouter } from "next/navigation";
 
 export default function CoursePage() {
   const router = useRouter();
+  const params = useParams();
   const [course_list, setCourseList] = useState([]);
   useEffect(() => {
-    utils.checkAuth("admin").then((value) => {
+    const email_id = decodeURIComponent(params.email_id);
+    utils.checkAuth("ADMIN", email_id).then((value) => {
       if (value == true) {
         admin_client.GetAllCourses().then((value) => {
           setCourseList(value);
@@ -50,9 +52,7 @@ export default function CoursePage() {
               <td>{m.department}</td>
               <td>
                 <button
-                  onClick={() =>
-                    router.push("/admin/courses/edit/" + m.course_id)
-                  }
+                  onClick={() => router.push("courses/edit/" + m.course_id)}
                 >
                   Edit
                 </button>

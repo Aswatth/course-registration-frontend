@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import * as admin_client from "../../../../(clients)/admin/course_client";
+import * as admin_client from "@/app/(clients)/admin/course_client";
 import { useParams, useRouter } from "next/navigation";
 
 export default function EditCourse() {

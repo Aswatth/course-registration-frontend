@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import * as admin_client from "../../../../(clients)/admin/student_client";
+import * as admin_client from "@/app/(clients)/admin/student_client";
 import { useRouter, useParams } from "next/navigation";
 
 export default function EditStudent() {
@@ -10,7 +10,7 @@ export default function EditStudent() {
   const router = useRouter();
 
   useEffect(() => {
-    var email_id = decodeURIComponent(params.email_id);
+    var email_id = decodeURIComponent(params.student_email_id);
     admin_client.GetStudent(email_id).then((value) => {
       setStudentData(value);
     });

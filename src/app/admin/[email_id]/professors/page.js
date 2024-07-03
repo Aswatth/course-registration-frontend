@@ -1,15 +1,17 @@
 "use client";
 import { useEffect, useState } from "react";
-import * as utils from "../../(utils)/auth";
+import * as utils from "@/app/(utils)/auth";
 import * as admin_client from "@/app/(clients)/admin/professor_client";
+import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 export default function ProfessorsPage() {
   const router = useRouter();
+  const params = useParams();
   const [professor_list, setProfessorList] = useState([]);
   useEffect(() => {
-    utils.checkAuth().then(() => {
+    const email_id = decodeURIComponent(params.email_id);
+    utils.checkAuth("ADMIN", email_id).then(() => {
       admin_client.GetAllProfessors().then((value) => {
         if (value != null) {
           setProfessorList(value);
@@ -35,7 +37,7 @@ export default function ProfessorsPage() {
       <div>
         <button
           onClick={() => {
-            router.push("/admin/professors/add");
+            router.push("professors/add");
           }}
         >
           Add new professor
@@ -63,7 +65,7 @@ export default function ProfessorsPage() {
                   <td>
                     <button
                       onClick={() =>
-                        router.push("/admin/professors/edit/" + m.email_id)
+                        router.push("professors/edit/" + m.email_id)
                       }
                     >
                       Edit
