@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import * as login_client from "../(clients)/login_client";
+import * as login_client from "@/app/(clients)/login_client";
 import { redirect } from "next/navigation";
 import { jwtDecode } from "jwt-decode";
 
@@ -20,7 +20,10 @@ export default async function Login() {
       const token = res_body["token"];
       cookies().set(process.env.NEXT_PUBLIC_COOKIE_NAME, "Bearer " + token);
       const decoded_token = jwtDecode(token);
-      redirect("/" + decoded_token["user_type"].toLowerCase());
+      const user_type = decoded_token["user_type"].toLowerCase();
+      const email_id = decoded_token["email_id"];
+
+      redirect("/" + user_type + "/" + email_id);
     } else {
       redirect("/login");
     }
