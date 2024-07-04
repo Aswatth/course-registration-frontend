@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from "react";
 import * as utils from "@/app/(utils)/auth";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import * as professor_client from "@/app/(clients)/professor/offered_course_client";
 
 export default function ProfessorHomePage() {
+  const router = useRouter();
   const params = useParams();
 
   const [offered_courses, setOfferedCourses] = useState([]);
@@ -33,7 +34,13 @@ export default function ProfessorHomePage() {
 
   return (
     <div>
-      <button>Offer a new course</button>
+      <button
+        onClick={() =>
+          router.push(decodeURIComponent(params.email_id) + "/add")
+        }
+      >
+        Offer a new course
+      </button>
       <table>
         <thead>
           <tr>
@@ -50,13 +57,12 @@ export default function ProfessorHomePage() {
                 <td>
                   <tr>
                     <td>
-                      {m.days.map((d) => {
-                        return <p>{d}</p>;
-                      })}
-                    </td>
-                    <td>
-                      {m.timings.map((t) => {
-                        return <p>{t}</p>;
+                      {m.day_time.map((dt) => {
+                        return (
+                          <p>
+                            {dt.day}: {dt.start_time} - {dt.end_time}
+                          </p>
+                        );
                       })}
                     </td>
                   </tr>

@@ -37,3 +37,37 @@ export const DeleteOfferedCourse = async (crn) => {
     console.log("UNABLE TO DELETE OFFERED COURSE");
   }
 };
+
+export const GetAvailableCourses = async () => {
+  var body = null;
+  try {
+    const response = await fetch(API + "/courses", {
+      method: "GET",
+      headers: {
+        Authorization: cookies().get(COOKIE_NAME).value,
+      },
+    });
+    if (response.status == 200) {
+      body = await response.json();
+    }
+  } catch {
+    console.log("UNABLE TO FETCH AVAILABLE COURSES");
+  }
+  return body;
+};
+
+export const OfferCourse = async (offered_course) => {
+  console.log(JSON.stringify(offered_course));
+  try {
+    const response = await fetch(API + "/offered_course", {
+      method: "POST",
+      headers: {
+        Authorization: cookies().get(COOKIE_NAME).value,
+      },
+      body: JSON.stringify(offered_course),
+    });
+    return await response.json();
+  } catch {
+    console.log("UNABLE TO FETCH AVAILABLE COURSES");
+  }
+};
