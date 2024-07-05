@@ -15,7 +15,7 @@ export default function ProfessorHomePage() {
     var email_id = decodeURIComponent(params.email_id);
     utils.checkAuth("PROFESSOR", email_id).then((value) => {
       if (value == true) {
-        professor_client.GetOfferedCourse(email_id).then((data) => {
+        professor_client.GetOfferedCourseByProfessor(email_id).then((data) => {
           setOfferedCourses(data);
         });
       }
@@ -68,7 +68,15 @@ export default function ProfessorHomePage() {
                   </tr>
                 </td>
                 <td>
-                  <button>Edit</button>
+                  <button
+                    onClick={() =>
+                      router.push(
+                        decodeURIComponent(params.email_id) + "/edit/" + m.crn
+                      )
+                    }
+                  >
+                    Edit
+                  </button>
                   <button onClick={() => deleteOfferedCourse(m.crn)}>
                     Delete
                   </button>
