@@ -9,14 +9,39 @@ export default function StudentHomePage() {
   const params = useParams();
 
   const [registered_courses, setRegisteredCourses] = useState([]);
+  const [register_crns, setRegisteredCRNs] = useState([]);
 
   useEffect(() => {
     student_client
       .GetRegisteredCourses(decodeURIComponent(params.email_id))
       .then((data) => {
         setRegisteredCourses(data);
+        var crn_list = [];
+        data.map((m) => {
+          crn_list.push(m.offered_course.crn);
+        });
+        setRegisteredCRNs(crn_list);
       });
   }, []);
+
+  function withdrawCourse(crn) {
+    var email_id = decodeURIComponent(params.email_id);
+    var updated_crn_list = register_crns.filter((f) => f != crn);
+    student_client
+      .UpdateRegisteredCourses(email_id, {
+        registered_course_crns: updated_crn_list,
+      })
+      .then((response) => {
+        if (response != undefined && response["response"] != undefined) {
+          alert(response["response"]);
+        } else {
+          var update_data = registered_courses.filter(
+            (f) => f.offered_course.crn != crn
+          );
+          setRegisteredCourses(update_data);
+        }
+      });
+  }
 
   function displayRegisteredCourses() {
     if (registered_courses.length == 0) {
@@ -59,7 +84,11 @@ export default function StudentHomePage() {
                       })}
                     </td>
                     <td>
-                      <button>Withdraw</button>
+                      <button
+                        onClick={() => withdrawCourse(m.offered_course.crn)}
+                      >
+                        Withdraw
+                      </button>
                     </td>
                   </tr>
                 );

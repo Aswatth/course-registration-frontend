@@ -57,3 +57,18 @@ export const RegisterCourses = async (registered_courses) => {
     console.log("UNABLE TO REGISTER COURSES");
   }
 };
+
+export const UpdateRegisteredCourses = async (email_id, updated_registered_courses) => {
+  try {
+    const response = await fetch(API + "/register_course?email_id="+email_id, {
+      method: "PUT",
+      headers: {
+        Authorization: cookies().get(COOKIE_NAME).value,
+      },
+      body: JSON.stringify(updated_registered_courses),
+    });
+    return await response.json();
+  } catch {
+    console.log("UNABLE TO UPDATE REGISTERED COURSES");
+  }
+};
