@@ -15,7 +15,16 @@ export default function BrowseOfferedCourses() {
     student_client.GetAllOfferedCourses().then((data) => {
       setOfferedCourses(data);
     });
-  }, [registered_courses]);
+    student_client
+      .GetRegisteredCourses(decodeURIComponent(params.email_id))
+      .then((data) => {
+        var crn_list = [];
+        data.map((m) => {
+          crn_list.push(m.offered_course.crn);
+        });
+        setRegisteredCourses(crn_list);
+      });
+  }, []);
 
   function saveRegisteredCourses() {
     var final_data = {
