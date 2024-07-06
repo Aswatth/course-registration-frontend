@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import * as admin_client from ".@/app/(clients)/admin/course_client";
+import * as admin_client from "@/app/(clients)/admin/course_client";
 import { useRouter } from "next/navigation";
 
 export default function AddCourse() {
