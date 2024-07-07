@@ -1,49 +1,93 @@
-import { cookies } from "next/headers";
+"use client";
 import * as login_client from "@/app/(clients)/login_client";
-import { redirect } from "next/navigation";
-import { jwtDecode } from "jwt-decode";
+import style from "./login.module.css";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-export default async function Login() {
-  async function validateLogin(formData) {
-    "use server";
-    const email_id = formData.get("email_id");
-    const password = formData.get("password");
+export default function Login() {
+  const router = useRouter();
+  const [login_data, setLoginData] = useState({});
+  const [error_message, setErrorMessage] = useState("");
 
-    const response = await login_client.login({
-      email_id: email_id,
-      password: password,
+  function validateLogin() {
+    login_client.login(login_data).then((response) => {
+      if (response.status == 200) {
+        router.push(response.repsonse);
+      } else {
+        setErrorMessage(response.repsonse);
+      }
     });
-
-    const res_body = await response.json();
-
-    if (response.status == 200) {
-      const token = res_body["token"];
-      cookies().set(process.env.NEXT_PUBLIC_COOKIE_NAME, "Bearer " + token);
-      const decoded_token = jwtDecode(token);
-      const user_type = decoded_token["user_type"].toLowerCase();
-      const email_id = decoded_token["email_id"];
-
-      redirect("/" + user_type + "/" + email_id);
-    } else {
-      redirect("/login");
-    }
   }
 
-  return (
-    <div style={{ display: "flex", flexDirection: "column" }}>
-      Login page
-      <form action={validateLogin}>
-        <label id="email_id">Email Id</label>
-        <br></br>
-        <input type="email" name="email_id" id="email_id"></input>
-        <br></br>
+  const displayErrorMessage = () => {
+    if (error_message.length == 0) {
+      return <div></div>;
+    } else {
+      return (
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            justifyContent: "start",
+          }}
+        >
+          <div className={style["error-message"]}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              className="bi bi-exclamation-triangle-fill"
+              viewBox="0 0 16 16"
+              style={{ flex: 1 }}
+            >
+              <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
+            </svg>
+            <span style={{ flex: 1 }}>&nbsp; {error_message}</span>
+          </div>
+        </div>
+      );
+    }
+  };
 
-        <label id="password">Password</label>
-        <br></br>
-        <input type="password" name="password" id="password"></input>
-        <br></br>
-        <button type="submit">Login</button>
-      </form>
+  return (
+    <div className={style.login}>
+      <div className={style["login-ui"]}>
+        <div className={style["card"]}>
+          <div className={style["card-title"]}>Log in</div>
+          <div className={style["input-decoration"]}>
+            <input
+              type="email"
+              required="required"
+              id="email"
+              name="email"
+              onChange={(e) =>
+                setLoginData({ ...login_data, email_id: e.target.value })
+              }
+            ></input>
+            <span>Email</span>
+          </div>
+          <div className={style["input-decoration"]}>
+            <input
+              type="password"
+              required="required"
+              id="password"
+              name="password"
+              onChange={(e) =>
+                setLoginData({ ...login_data, password: e.target.value })
+              }
+            ></input>
+            <span>Password</span>
+          </div>
+          <button
+            className={style["login-button"]}
+            onClick={() => validateLogin()}
+          >
+            Log in
+          </button>
+          {displayErrorMessage()}
+        </div>
+      </div>
     </div>
   );
 }

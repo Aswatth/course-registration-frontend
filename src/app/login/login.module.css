@@ -1,0 +1,108 @@
+.login-ui {
+  /* flex: 1; */
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: hsl(var(--base-color800));
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+  width: clamp(100px, 50%, 400px);
+  height: clamp(200px, 50%, 800px);
+  background-color: white;
+  border: 2px solid hsl(var(--base-color800));
+  color: hsl(var(--base-color800));
+  padding: clamp(10px, 30%, 30px);
+}
+
+.card-title {
+  position: absolute;
+  left: 1;
+  top: -25px;
+  width: 50%;
+  text-align: center;
+  /* margin-top: calc(var(--default-margin) * 4);
+  margin-left: calc(var(--default-margin) * 4); */
+  letter-spacing: 2px;
+  padding: calc(var(--default-padding) * 4);
+  background-color: hsl(var(--base-color800));
+  color: white;
+  font-size: calc(var(--default-font-size) * 2);
+  text-transform: capitalize;
+  font-weight: bold;
+  border-radius: 20px;
+}
+
+.input-decoration {
+  position: relative;
+  display: flex;
+  width: 100%;
+}
+.input-decoration input {
+  width: 100%;
+  border-radius: calc(var(--default-border-radius) * 4);
+  padding: calc(var(--default-padding) * 4);
+  background-color: hsl(var(--grey200));
+  outline: none;
+  color: hsl(var(--base-color800));
+  margin-bottom: calc(var(--default-margin) * 15);
+}
+
+.input-decoration span {
+  position: absolute;
+  left: 10;
+  padding: calc(var(--default-padding) * 4);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  pointer-events: none;
+  color: hsla(var(--base-color800), 0.5);
+  transition: 0.5s;
+}
+
+.input-decoration input:valid ~ span,
+.input-decoration input:focus ~ span {
+  color: hsl(var(--base-color800));
+  transform: translateX(10px) translateY(-20px);
+  background-color: white;
+  color: hsl(var(--base-color800));
+  padding: calc(var(--default-padding) * 2);
+  font-size: 0.8em;
+  font-weight: bold;
+  border-radius: 10px;
+  border: solid 2px hsl(var(--base-color800), 0.2);
+}
+
+.login-button {
+  background-color: hsl(var(--base-color800));
+  color: white;
+  letter-spacing: 2px;
+  padding: calc(var(--default-padding) * 4);
+  border: 2px solid hsl(var(--base-color800));
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: var(--default-font-size);
+  width: 100%;
+  text-transform: capitalize;
+  margin-bottom: calc(var(--default-margin) * 10);
+}
+
+.login-button:hover {
+  background-color: white;
+  color: hsl(var(--base-color800));
+  border: 2px solid hsl(var(--base-color800));
+  cursor: pointer;
+}
+
+.error-message {
+  color: red;
+  /* font-style: italic; */
+  /* font-weight: bold; */
+}
