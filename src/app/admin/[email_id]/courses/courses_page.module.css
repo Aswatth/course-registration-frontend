@@ -1,0 +1,52 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  /* flex: 1; */
+  height: 100px;
+  background-color: hsl(var(--base-color800));
+  display: flex;
+  align-items: center;
+  color: white;
+  padding: calc(var(--default-padding) * 4);
+}
+
+.header h1 {
+  flex: 1;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin: calc(var(--default-margin) * 8);
+}
+
+.add {
+  display: flex;
+  justify-content: end;
+}
+.add-button {
+  background-color: hsl(var(--green-accent800));
+}
+
+.table-header {
+  font-weight: bold;
+  padding: calc(var(--default-padding) * 2);
+}
+
+.course-actions {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.edit-course {
+  background-color: hsl(var(--yellow-accent600));
+}
+
+.delete-course {
+  background-color: hsl(var(--red-accent600));
+}

@@ -4,6 +4,8 @@ import * as utils from "@/app/(utils)/auth";
 import * as admin_client from "@/app/(clients)/admin/course_client";
 import { useParams, useRouter } from "next/navigation";
 
+import style from "./courses_page.module.css";
+
 export default function CoursePage() {
   const router = useRouter();
   const params = useParams();
@@ -30,40 +32,64 @@ export default function CoursePage() {
   }
 
   return (
-    <div>
-      Course page <br></br>
-      <button onClick={() => router.push("courses/add")}>Add new course</button>
-      <table>
-        <tr>
-          <th>Course Id</th>
-          <th>Course name</th>
-          <th>Course description</th>
-          <th>Credits</th>
-          <th>Department</th>
-          <th>Actions</th>
-        </tr>
-        {course_list.map((m) => {
-          return (
+    <div className={style["page"]}>
+      <div className={style["header"]}>
+        <button onClick={() => router.back()}>Back</button>
+        <h1>Courses</h1>
+      </div>
+      <div className={style["content"]}>
+        <div className={style["add"]}>
+          <button
+            className={style["add-button"]}
+            onClick={() => router.push("courses/add")}
+          >
+            Add course
+          </button>
+        </div>
+        <table>
+          <thead>
             <tr>
-              <td>{m.course_id}</td>
-              <td>{m.course_name}</td>
-              <td>{m.course_description}</td>
-              <td>{m.credits}</td>
-              <td>{m.department}</td>
-              <td>
-                <button
-                  onClick={() => router.push("courses/edit/" + m.course_id)}
-                >
-                  Edit
-                </button>
-                <button onClick={() => deleteCourse(m.course_id)}>
-                  Delete
-                </button>
-              </td>
+              <th className={style["table-header"]}>Course Id</th>
+              <th className={style["table-header"]}>Course name</th>
+              <th className={style["table-header"]}>Course description</th>
+              <th className={style["table-header"]}>Credits</th>
+              <th className={style["table-header"]}>Department</th>
+              <th className={style["table-header"]}>Actions</th>
             </tr>
-          );
-        })}
-      </table>
+          </thead>
+          <tbody>
+            {course_list.map((m) => {
+              return (
+                <tr key={m.course_id}>
+                  <td>{m.course_id}</td>
+                  <td>{m.course_name}</td>
+                  <td>{m.course_description}</td>
+                  <td>{m.credits}</td>
+                  <td>{m.department}</td>
+                  <td>
+                    <div className={style["course-actions"]}>
+                      <button
+                        className={style["edit-course"]}
+                        onClick={() =>
+                          router.push("courses/edit/" + m.course_id)
+                        }
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className={style["delete-course"]}
+                        onClick={() => deleteCourse(m.course_id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
