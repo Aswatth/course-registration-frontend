@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import * as admin_client from "@/app/(clients)/admin/course_client";
 import { useParams, useRouter } from "next/navigation";
 
+import style from "./edit_course.module.css";
+
 export default function EditCourse() {
   const router = useRouter();
   const [course, setCourse] = useState({});
@@ -12,7 +14,6 @@ export default function EditCourse() {
   useEffect(() => {
     var course_id = decodeURIComponent(params.course_id);
     admin_client.GetCourse(course_id).then((value) => {
-      console.log(value);
       setCourse(value);
     });
   }, []);
@@ -28,76 +29,81 @@ export default function EditCourse() {
   }
 
   return (
-    <div>
-      Add new course
-      <br></br>
-      <label htmlFor="course_id">Course Id:</label>
-      <br></br>
-      <input
-        type="number"
-        id="course_id"
-        name="course_id"
-        required={true}
-        disabled={true}
-        value={course.course_id}
-        onChange={(e) => {
-          setCourse({ ...course, course_id: parseInt(e.target.value) });
-        }}
-      ></input>
-      <br></br>
-      <label htmlFor="course_name">Course name:</label>
-      <br></br>
-      <input
-        type="text"
-        id="course_name"
-        name="course_name"
-        required={true}
-        value={course.course_name}
-        onChange={(e) => {
-          setCourse({ ...course, course_name: e.target.value });
-        }}
-      ></input>
-      <br></br>
-      <label htmlFor="course_description">Course description:</label>
-      <br></br>
-      <input
-        type="text"
-        id="course_description"
-        name="course_description"
-        required={true}
-        value={course.course_description}
-        onChange={(e) => {
-          setCourse({ ...course, course_description: e.target.value });
-        }}
-      ></input>
-      <br></br>
-      <label htmlFor="credits">Credits:</label>
-      <br></br>
-      <input
-        type="number"
-        id="credits"
-        name="credits"
-        required={true}
-        value={course.credits}
-        onChange={(e) => {
-          setCourse({ ...course, credits: parseInt(e.target.value) });
-        }}
-      ></input>
-      <br></br>
-      <label htmlFor="department">Department:</label>
-      <br></br>
-      <input
-        type="text"
-        id="department"
-        name="department"
-        required={true}
-        value={course.department}
-        onChange={(e) => {
-          setCourse({ ...course, department: e.target.value });
-        }}
-      ></input>
-      <br></br>
-      <button onClick={() => updateCourse()}>Save</button>
+    <div className={style["page"]}>
+      <div className={style["header"]}>Edit course</div>
+
+      <div className={style["content"]}>
+        <div className={style["input-decoration"]}>
+          <input
+            type="number"
+            id="course_id"
+            name="course_id"
+            required={true}
+            contentEditable={false}
+            contet
+            disabled={true}
+            value={course.course_id}
+          ></input>
+          <span>Course ID</span>
+        </div>
+
+        <div className={style["input-decoration"]}>
+          <input
+            type="text"
+            id="course_name"
+            name="course_name"
+            required={true}
+            value={course.course_name}
+            onChange={(e) => {
+              setCourse({ ...course, course_name: e.target.value });
+            }}
+          ></input>
+          <span>Course name</span>
+        </div>
+
+        <div className={style["input-decoration"]}>
+          <input
+            type="text"
+            id="course_description"
+            name="course_description"
+            required={true}
+            value={course.course_description}
+            onChange={(e) => {
+              setCourse({ ...course, course_description: e.target.value });
+            }}
+          ></input>
+          <span>Course description</span>
+        </div>
+        <div className={style["input-decoration"]}>
+          <input
+            type="number"
+            id="credits"
+            name="credits"
+            required={true}
+            value={course.credits}
+            onChange={(e) => {
+              setCourse({ ...course, credits: parseInt(e.target.value) });
+            }}
+          ></input>
+          <span>Credits</span>
+        </div>
+        <div className={style["input-decoration"]}>
+          <input
+            type="text"
+            id="department"
+            name="department"
+            required={true}
+            value={course.department}
+            onChange={(e) => {
+              setCourse({ ...course, department: e.target.value });
+            }}
+          ></input>
+          <span>Department</span>
+        </div>
+        <button className={style["save-course"]} onClick={() => updateCourse()}>
+          Save
+        </button>
+      </div>
     </div>
   );
 }
