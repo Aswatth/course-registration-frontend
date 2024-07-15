@@ -4,6 +4,8 @@ import * as utils from "@/app/(utils)/auth";
 import * as admin_client from "@/app/(clients)/admin/student_client";
 import { useParams, useRouter } from "next/navigation";
 
+import style from "./students.module.css";
+
 export default function StudentPage() {
   const router = useRouter();
   const params = useParams();
@@ -34,14 +36,15 @@ export default function StudentPage() {
 
   const student_content = () => {
     return (
-      <div>
-        <button
-          onClick={() => {
-            router.push("students/add");
-          }}
-        >
-          Add new student
-        </button>
+      <div className={style["content"]}>
+        <div className={style["add"]}>
+          <button
+            className={style["add-button"]}
+            onClick={() => router.push("students/add")}
+          >
+            Add student
+          </button>
+        </div>
         <table>
           <thead>
             <tr>
@@ -61,16 +64,22 @@ export default function StudentPage() {
                   <td>{m.email_id}</td>
                   <td>{m.program_enrolled}</td>
                   <td>
-                    <button
-                      onClick={() => router.push("students/edit/" + m.email_id)}
-                    >
-                      Edit
-                    </button>
-                  </td>
-                  <td>
-                    <button onClick={() => delete_student(m.email_id)}>
-                      DELETE
-                    </button>
+                    <div className={style["student-actions"]}>
+                      <button
+                        className={style["edit-student"]}
+                        onClick={() =>
+                          router.push("students/edit/" + m.email_id)
+                        }
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className={style["delete-student"]}
+                        onClick={() => delete_student(m.email_id)}
+                      >
+                        DELETE
+                      </button>
+                    </div>
                   </td>
                 </tr>
               );
@@ -82,8 +91,10 @@ export default function StudentPage() {
   };
 
   return (
-    <div>
-      student page
+    <div className={style["page"]}>
+      <div className={style["header"]}>
+        <h1>Students</h1>
+      </div>
       {student_list.length == 0 ? no_content() : student_content()}
     </div>
   );
