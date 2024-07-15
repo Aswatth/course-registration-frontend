@@ -4,6 +4,8 @@ import * as admin_client from "@/app/(clients)/admin/professor_client";
 
 import { useState } from "react";
 
+import style from "./add_professor.module.css";
+
 export default function AddProfessor() {
   const router = useRouter();
   const [professor_data, setProfessorData] = useState({});
@@ -19,101 +21,107 @@ export default function AddProfessor() {
   }
 
   return (
-    <div>
-      <label htmlFor="first_name">First name:</label>
-      <br></br>
-      <input
-        type="text"
-        required={true}
-        value={professor_data.first_name}
-        id="first_name"
-        name="first_name"
-        onChange={(e) =>
-          setProfessorData({ ...professor_data, first_name: e.target.value })
-        }
-      ></input>
-      <br></br>
+    <div className={style["page"]}>
+      <div className={style["header"]}>Add professor</div>
+      <div className={style["content"]}>
+        <div className={style["input-decoration"]}>
+          <input
+            type="text"
+            required={true}
+            value={professor_data.first_name}
+            id="first_name"
+            name="first_name"
+            onChange={(e) =>
+              setProfessorData({
+                ...professor_data,
+                first_name: e.target.value,
+              })
+            }
+          ></input>
+          <span>First name</span>
+        </div>
+        <div className={style["input-decoration"]}>
+          <input
+            type="text"
+            required={true}
+            value={professor_data.last_name}
+            id="last_name"
+            name="last_name"
+            onChange={(e) =>
+              setProfessorData({ ...professor_data, last_name: e.target.value })
+            }
+          ></input>
+          <span>Last name</span>
+        </div>
 
-      <label htmlFor="last_name">Last name:</label>
-      <br></br>
-      <input
-        type="text"
-        required={true}
-        value={professor_data.last_name}
-        id="last_name"
-        name="last_name"
-        onChange={(e) =>
-          setProfessorData({ ...professor_data, last_name: e.target.value })
-        }
-      ></input>
-      <br></br>
+        <div className={style["input-decoration"]}>
+          <input
+            type="email"
+            required={true}
+            value={professor_data.email_id}
+            id="email_id"
+            name="email_id"
+            onChange={(e) =>
+              setProfessorData({ ...professor_data, email_id: e.target.value })
+            }
+          ></input>
+          <span>Email Id</span>
+        </div>
 
-      <label htmlFor="email_id">Email Id:</label>
-      <br></br>
-      <input
-        type="email"
-        required={true}
-        value={professor_data.email_id}
-        id="email_id"
-        name="email_id"
-        onChange={(e) =>
-          setProfessorData({ ...professor_data, email_id: e.target.value })
-        }
-      ></input>
-      <br></br>
+        <div className={style["input-decoration"]}>
+          <input
+            type="password"
+            required={true}
+            value={professor_data.password}
+            id="password"
+            name="password"
+          ></input>
+          <span>Password</span>
+        </div>
 
-      <label htmlFor="password">Password:</label>
-      <br></br>
-      <input
-        type="password"
-        required={true}
-        value={professor_data.password}
-        id="password"
-        name="password"
-      ></input>
-      <br></br>
+        <div className={style["input-decoration"]}>
+          <input
+            type="text"
+            required={true}
+            value={professor_data.designation}
+            id="designation"
+            name="designation"
+            onChange={(e) =>
+              setProfessorData({
+                ...professor_data,
+                designation: e.target.value,
+              })
+            }
+          ></input>
+          <span>Designation</span>
+        </div>
 
-      <label htmlFor="designation">Designation:</label>
-      <br></br>
-      <input
-        type="text"
-        required={true}
-        value={professor_data.designation}
-        id="designation"
-        name="designation"
-        onChange={(e) =>
-          setProfessorData({
-            ...professor_data,
-            designation: e.target.value,
-          })
-        }
-      ></input>
-      <br></br>
+        <div className={style["input-decoration"]}>
+          <input
+            type="text"
+            required={true}
+            value={professor_data.department}
+            id="department"
+            name="department"
+            onChange={(e) =>
+              setProfessorData({
+                ...professor_data,
+                department: e.target.value,
+              })
+            }
+          ></input>
+          <span>Department</span>
+        </div>
 
-      <label htmlFor="department">Department:</label>
-      <br></br>
-      <input
-        type="text"
-        required={true}
-        value={professor_data.department}
-        id="department"
-        name="department"
-        onChange={(e) =>
-          setProfessorData({
-            ...professor_data,
-            department: e.target.value,
-          })
-        }
-      ></input>
-      <br></br>
-
-      <button
-        onClick={() => {
-          createNewProfessor();
-        }}
-      >
-        Create new professor
-      </button>
+        <button
+          className={style["create-professor"]}
+          onClick={() => {
+            createNewProfessor();
+          }}
+        >
+          Create new professor
+        </button>
+      </div>
     </div>
   );
 }
