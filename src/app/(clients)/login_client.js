@@ -3,6 +3,7 @@ import { jwtDecode } from "jwt-decode";
 import { cookies } from "next/headers";
 
 const API = process.env.NEXT_PUBLIC_API;
+const COOKIE_NAME = process.env.NEXT_PUBLIC_COOKIE_NAME;
 
 export const login = async (credential) => {
   try {
@@ -30,4 +31,8 @@ export const login = async (credential) => {
     console.log("CANNOT LOG IN");
   }
   return { status: 500, response: "Error occured while logging in" };
+};
+
+export const logout = async () => {
+  cookies().delete(COOKIE_NAME);
 };
