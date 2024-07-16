@@ -5,6 +5,8 @@ import * as utils from "@/app/(utils)/auth";
 import { useParams, useRouter } from "next/navigation";
 import * as professor_client from "@/app/(clients)/professor/offered_course_client";
 
+import style from "./professor.module.css";
+
 export default function ProfessorHomePage() {
   const router = useRouter();
   const params = useParams();
@@ -33,59 +35,72 @@ export default function ProfessorHomePage() {
   }
 
   return (
-    <div>
-      <button
-        onClick={() =>
-          router.push(decodeURIComponent(params.email_id) + "/add")
-        }
-      >
-        Offer a new course
-      </button>
-      <table>
-        <thead>
-          <tr>
-            <th>CRN</th>
-            <th>Course Id</th>
-            <th>Day-Timing</th>
-            <th>Actions</th>
-          </tr>
-          {offered_courses.map((m) => {
-            return (
-              <tr>
-                <td>{m.crn}</td>
-                <td>{m.course_id}</td>
-                <td>
-                  <tr>
-                    <td>
-                      {m.day_time.map((dt) => {
-                        return (
-                          <p>
-                            {dt.day}: {dt.start_time} - {dt.end_time}
-                          </p>
-                        );
-                      })}
-                    </td>
-                  </tr>
-                </td>
-                <td>
-                  <button
-                    onClick={() =>
-                      router.push(
-                        decodeURIComponent(params.email_id) + "/edit/" + m.crn
-                      )
-                    }
-                  >
-                    Edit
-                  </button>
-                  <button onClick={() => deleteOfferedCourse(m.crn)}>
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            );
-          })}
-        </thead>
-      </table>
+    <div className={style["page"]}>
+      <div className={style["header"]}>
+        <h1>Welcome Professor</h1>
+      </div>
+      <div className={style["content"]}>
+        <div className={style["add"]}>
+          <button
+            className={style["add-button"]}
+            onClick={() =>
+              router.push(decodeURIComponent(params.email_id) + "/add")
+            }
+          >
+            Offer a new course
+          </button>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>CRN</th>
+              <th>Course Id</th>
+              <th>Day-Timing</th>
+              <th>Actions</th>
+            </tr>
+            {offered_courses.map((m) => {
+              return (
+                <tr>
+                  <td>{m.crn}</td>
+                  <td>{m.course_id}</td>
+                  <td>
+                    {m.day_time.map((dt) => {
+                      return (
+                        <span>
+                          {dt.day}: {dt.start_time} - {dt.end_time}
+                          <br></br>
+                        </span>
+                      );
+                    })}
+                  </td>
+                  <td>
+                    <div className={style["actions"]}>
+                      <button
+                        className={style["edit-action"]}
+                        onClick={() =>
+                          router.push(
+                            decodeURIComponent(params.email_id) +
+                              "/edit/" +
+                              m.crn
+                          )
+                        }
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className={style["delete-action"]}
+                        onClick={() => deleteOfferedCourse(m.crn)}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+          </thead>
+        </table>
+      </div>
     </div>
   );
 }
