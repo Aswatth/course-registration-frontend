@@ -3,6 +3,9 @@
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import * as student_client from "@/app/(clients)/student/register_course_client";
+import { logout } from "@/app/(clients)/login_client";
+
+import style from "./student.module.css";
 
 export default function StudentHomePage() {
   const router = useRouter();
@@ -48,8 +51,8 @@ export default function StudentHomePage() {
       return <div>No registered courses</div>;
     } else {
       return (
-        <div>
-          <table>
+        <div style={{ display: "flex" }}>
+          <table style={{ flex: 1 }}>
             <thead>
               <tr>
                 <th>Course Id</th>
@@ -77,14 +80,15 @@ export default function StudentHomePage() {
                     <td>
                       {m.offered_course.day_time.map((dt) => {
                         return (
-                          <span>
+                          <p>
                             {dt.day}: {dt.start_time} - {dt.end_time}
-                          </span>
+                          </p>
                         );
                       })}
                     </td>
                     <td>
                       <button
+                        className={style["withraw-course-button"]}
                         onClick={() => withdrawCourse(m.offered_course.crn)}
                       >
                         Withdraw
@@ -101,17 +105,36 @@ export default function StudentHomePage() {
   }
 
   return (
-    <div>
-      Student home page <br></br>
-      <button
-        onClick={() => {
-          router.push(decodeURIComponent(params.email_id) + "/browse_courses");
-        }}
-      >
-        Browse courses
-      </button>
-      <hr></hr>
-      {displayRegisteredCourses()}
+    <div className={style["page"]}>
+      <div className={style["header"]}>
+        <h1>Welcome Student</h1>
+        <button
+          className={style["header-button"]}
+          onClick={() => {
+            logout().then(() => {
+              router.back("login");
+            });
+          }}
+        >
+          Logout
+        </button>
+      </div>
+      <div className={style["content"]}>
+        <div className={style["browse-courses"]}>
+          <button
+            className={style["browse-courses-button"]}
+            onClick={() => {
+              router.push(
+                decodeURIComponent(params.email_id) + "/browse_courses"
+              );
+            }}
+          >
+            Browse courses
+          </button>
+        </div>
+        {/* <hr></hr> */}
+        {displayRegisteredCourses()}
+      </div>
     </div>
   );
 }
