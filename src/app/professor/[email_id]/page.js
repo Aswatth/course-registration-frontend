@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import * as utils from "@/app/(utils)/auth";
 import { useParams, useRouter } from "next/navigation";
 import * as professor_client from "@/app/(clients)/professor/offered_course_client";
-
+import { logout } from "@/app/(clients)/login_client";
 import style from "./professor.module.css";
 
 export default function ProfessorHomePage() {
@@ -38,6 +38,16 @@ export default function ProfessorHomePage() {
     <div className={style["page"]}>
       <div className={style["header"]}>
         <h1>Welcome Professor</h1>
+        <button
+          className={style["header-button"]}
+          onClick={() => {
+            logout().then(() => {
+              router.back("login");
+            });
+          }}
+        >
+          Logout
+        </button>
       </div>
       <div className={style["content"]}>
         <div className={style["add"]}>
