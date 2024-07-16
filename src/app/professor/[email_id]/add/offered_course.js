@@ -4,7 +4,18 @@ import { useState } from "react";
 import * as professor_client from "@/app/(clients)/professor/offered_course_client";
 import { useParams } from "next/navigation";
 
+import style from "./offer_course.module.css";
+
 export default function OfferCourse({ selected_course }) {
+  const day_list = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ];
   const [crn, setCRN] = useState();
 
   const [day_time_list, setDayTimeList] = useState([]);
@@ -33,95 +44,161 @@ export default function OfferCourse({ selected_course }) {
   }
 
   return (
-    <div>
-      <label htmlFor="course_id">Course Id</label>
-      <br></br>
-      <input
-        type="number"
-        id="course_id"
-        name="course_id"
-        disabled={true}
-        value={selected_course.course_id}
-      ></input>
-      <br></br>
-      <label htmlFor="crn">CRN</label>
-      <br></br>
-      <input
-        type="number"
-        id="crn"
-        name="crn"
-        require={true}
-        onChange={(e) => {
-          setCRN(parseInt(e.target.value));
-        }}
-      ></input>{" "}
-      <br></br>
-      <h3>Date-Time</h3>
-      <br></br>
-      <div>
-        <select onChange={(e) => setDay(e.target.value)}>
-          <option>Monday</option>
-          <option>Tuesday</option>
-        </select>
-        Start time:{" "}
+    <div className={style["content"]}>
+      <div className={style["input-decoration"]}>
         <input
-          type="time"
-          id="timing"
-          name="timing"
-          onChange={(e) => setStartTime(e.target.value)}
+          type="number"
+          id="course_id"
+          name="course_id"
+          disabled={true}
+          value={selected_course.course_id}
         ></input>
-        End time:{" "}
+        <span>Course Id</span>
+      </div>
+      <div className={style["input-decoration"]}>
         <input
-          type="time"
-          id="timing"
-          name="timing"
-          onChange={(e) => setEndTime(e.target.value)}
-        ></input>
-        <button
-          onClick={() => {
-            var filtered_data = day_time_list.filter(
-              (f) => f.day == selected_day
-            );
-            console.log(day_time_list, filtered_data);
-            if (filtered_data.length != 0) {
-              alert("Selected day already exists");
-            } else {
-              var data = [
-                ...day_time_list,
-                {
-                  day: selected_day,
-                  start_time: selected_start_time,
-                  end_time: selected_end_time,
-                },
-              ];
-              setDayTimeList(data);
-            }
+          type="number"
+          id="crn"
+          name="crn"
+          require={true}
+          onChange={(e) => {
+            setCRN(parseInt(e.target.value));
           }}
-        >
-          Add
-        </button>
-        <p>Day-time list</p>
-        <p>
-          {day_time_list.map((m) => {
-            return (
-              <div>
-                <span>
-                  {m.day}: {m.start_time} - {m.end_time}
-                </span>
-                <button
-                  onClick={() => {
-                    setDayTimeList(day_time_list.filter((f) => f.day != m.day));
-                  }}
-                >
-                  Remove
-                </button>
-              </div>
-            );
-          })}
-        </p>
+        ></input>
+        <span>CRN</span>
       </div>
       <br></br>
-      <button onClick={() => offerCourse()}>Offer</button>
+      <h3>Date-Time</h3>
+      <hr></hr>
+      <br></br>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          marginBottom: "10px",
+        }}
+      >
+        <table>
+          <thead>
+            <tr>
+              <th>Select a day</th>
+              <th>Select start time</th>
+              <th>Select end time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <select
+                  className={style["day-picker"]}
+                  onChange={(e) => setDay(e.target.value)}
+                >
+                  {day_list.map((m) => {
+                    return <option>{m}</option>;
+                  })}
+                </select>
+              </td>
+              <td>
+                <input
+                  className={style["time-picker"]}
+                  type="time"
+                  id="timing"
+                  name="timing"
+                  onChange={(e) => setStartTime(e.target.value)}
+                ></input>
+              </td>
+              <td>
+                <input
+                  className={style["time-picker"]}
+                  type="time"
+                  id="timing"
+                  name="timing"
+                  onChange={(e) => setEndTime(e.target.value)}
+                ></input>
+              </td>
+              <td>
+                <button
+                  onClick={() => {
+                    var filtered_data = day_time_list.filter(
+                      (f) => f.day == selected_day
+                    );
+                    console.log(day_time_list, filtered_data);
+                    if (filtered_data.length != 0) {
+                      alert("Selected day already exists");
+                    } else {
+                      var data = [
+                        ...day_time_list,
+                        {
+                          day: selected_day,
+                          start_time: selected_start_time,
+                          end_time: selected_end_time,
+                        },
+                      ];
+                      setDayTimeList(data);
+                    }
+                  }}
+                >
+                  Add
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <h3>Day-time list</h3>
+        <hr></hr>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          {day_time_list.length == 0 ? (
+            <span>No data</span>
+          ) : (
+            <table>
+              <thead>
+                <tr>
+                  <th>Day</th>
+                  <th>Start time</th>
+                  <th>End time</th>
+                </tr>
+              </thead>
+              <tbody>
+                {day_time_list.map((m) => {
+                  return (
+                    <tr>
+                      <td>{m.day}</td>
+                      <td>{m.start_time}</td>
+                      <td>{m.end_time}</td>
+                      <button
+                        onClick={() => {
+                          setDayTimeList(
+                            day_time_list.filter((f) => f.day != m.day)
+                          );
+                        }}
+                      >
+                        Remove
+                      </button>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          )}
+        </div>
+      </div>
+      <br></br>
+      <div style={{ display: "flex" }}>
+        <button
+          disabled={day_time_list.length == 0 ? true : false}
+          style={{ flex: 1 }}
+          onClick={() => offerCourse()}
+        >
+          Offer
+        </button>
+      </div>
     </div>
   );
 }

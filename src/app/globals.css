@@ -68,6 +68,9 @@ button {
   background-color: hsl(var(--base-color800));
   border: none;
 }
+button:disabled {
+  background-color: hsl(var(--base-color800), 0.2);
+}
 button:hover {
   cursor: pointer;
 }

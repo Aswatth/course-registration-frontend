@@ -4,7 +4,18 @@ import { useEffect, useState } from "react";
 import * as professor_client from "@/app/(clients)/professor/offered_course_client";
 import { useRouter, useParams } from "next/navigation";
 
+import style from "./edit_offered_course.module.css";
+
 export default function EditOfferedCourse() {
+  const day_list = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ];
   const [offered_course, setOfferedCourse] = useState({ day_time: [] });
 
   const [selected_day, setDay] = useState("Monday");
@@ -32,104 +43,165 @@ export default function EditOfferedCourse() {
   }
 
   return (
-    <div>
-      <div>
-        <label htmlFor="course_id">Course Id</label>
-        <br></br>
-        <input
-          type="number"
-          id="course_id"
-          name="course_id"
-          disabled={true}
-          value={offered_course.course_id}
-        ></input>
-        <br></br>
-        <label htmlFor="crn">CRN</label>
-        <br></br>
-        <input
-          type="number"
-          id="crn"
-          name="crn"
-          require={true}
-          disabled={true}
-          value={offered_course.crn}
-        ></input>
-        <br></br>
-        <h3>Date-Time</h3>
-        <br></br>
-        <div>
-          <select onChange={(e) => setDay(e.target.value)}>
-            <option>Monday</option>
-            <option>Tuesday</option>
-          </select>
-          Start time:
-          <input
-            type="time"
-            id="timing"
-            name="timing"
-            onChange={(e) => setStartTime(e.target.value)}
-          ></input>
-          End time:
-          <input
-            type="time"
-            id="timing"
-            name="timing"
-            onChange={(e) => setEndTime(e.target.value)}
-          ></input>
-          <button
-            onClick={() => {
-              var existing_day_time = offered_course.day_time;
-              var filtered_data = existing_day_time.filter(
-                (f) => f.day == selected_day
-              );
-              if (filtered_data.length != 0) {
-                alert("Selected day already exists");
-              } else {
-                existing_day_time.push({
-                  day: selected_day,
-                  start_time: selected_start_time,
-                  end_time: selected_end_time,
-                });
-                setOfferedCourse({
-                  ...offered_course,
-                  day_time: existing_day_time,
-                });
-              }
-            }}
+    <div className={style["page"]}>
+      <div className={style["header"]}>
+        <button onClick={() => router.back()}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-chevron-compact-left"
+            viewBox="0 0 16 16"
           >
-            Add
-          </button>
-          <p>Day-time list</p>
-          <p>
-            {offered_course.day_time.map((m) => {
-              return (
-                <div>
-                  <span>
-                    {m.day}: {m.start_time} - {m.end_time}
-                  </span>
+            <path
+              fill-rule="evenodd"
+              d="M9.224 1.553a.5.5 0 0 1 .223.67L6.56 8l2.888 5.776a.5.5 0 1 1-.894.448l-3-6a.5.5 0 0 1 0-.448l3-6a.5.5 0 0 1 .67-.223"
+            />
+          </svg>
+        </button>
+        <h1>Edit offered course</h1>
+      </div>
+      <div className={style["content"]}>
+        <div className={style["input-decoration"]}>
+          <input
+            type="number"
+            id="course_id"
+            name="course_id"
+            disabled={true}
+            value={offered_course.course_id}
+          ></input>
+          <span>Course Id</span>
+        </div>
+        <div className={style["input-decoration"]}>
+          <input
+            type="number"
+            id="crn"
+            name="crn"
+            require={true}
+            disabled={true}
+            value={offered_course.crn}
+          ></input>
+          <span>CRN</span>
+        </div>
+        <h3>Date-Time</h3>
+        <hr></hr>
+        <div style={{ marginBottom: "10px" }}>
+          <table>
+            <thead>
+              <tr>
+                <th>Select a day</th>
+                <th>Select start time</th>
+                <th>Select end time</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <select
+                    className={style["day-picker"]}
+                    onChange={(e) => setDay(e.target.value)}
+                  >
+                    {day_list.map((m) => {
+                      return <option>{m}</option>;
+                    })}
+                  </select>
+                </td>
+                <td>
+                  <input
+                    className={style["time-picker"]}
+                    type="time"
+                    id="timing"
+                    name="timing"
+                    onChange={(e) => setStartTime(e.target.value)}
+                  ></input>
+                </td>
+                <td>
+                  <input
+                    className={style["time-picker"]}
+                    type="time"
+                    id="timing"
+                    name="timing"
+                    onChange={(e) => setEndTime(e.target.value)}
+                  ></input>
+                </td>
+                <td>
                   <button
                     onClick={() => {
                       var existing_day_time = offered_course.day_time;
-
-                      existing_day_time = existing_day_time.filter(
-                        (f) => f.day != m.day
+                      var filtered_data = existing_day_time.filter(
+                        (f) => f.day == selected_day
                       );
-                      console.log(existing_day_time);
-                      setOfferedCourse({
-                        ...offered_course,
-                        day_time: existing_day_time,
-                      });
+                      if (filtered_data.length != 0) {
+                        alert("Selected day already exists");
+                      } else {
+                        existing_day_time.push({
+                          day: selected_day,
+                          start_time: selected_start_time,
+                          end_time: selected_end_time,
+                        });
+                        setOfferedCourse({
+                          ...offered_course,
+                          day_time: existing_day_time,
+                        });
+                      }
                     }}
                   >
-                    Remove
+                    Add
                   </button>
-                </div>
-              );
-            })}
-          </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <h3>Day-time list</h3>
+          <hr></hr>
+          <table>
+            <thead>
+              <tr>
+                <th>Day</th>
+                <th>Start time</th>
+                <th>End time</th>
+              </tr>
+            </thead>
+            <tbody>
+              {offered_course.day_time.map((m) => {
+                return (
+                  <tr>
+                    <td>{m.day}</td>
+                    <td>{m.start_time}</td>
+                    <td>{m.end_time}</td>
+                    <button
+                      onClick={() => {
+                        var existing_day_time = offered_course.day_time;
+
+                        existing_day_time = existing_day_time.filter(
+                          (f) => f.day != m.day
+                        );
+                        console.log(existing_day_time);
+                        setOfferedCourse({
+                          ...offered_course,
+                          day_time: existing_day_time,
+                        });
+                      }}
+                    >
+                      Remove
+                    </button>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+          <p>{}</p>
         </div>
         <br></br>
-        <button onClick={() => saveChanges()}>Save</button>
+        <button
+          disabled={offered_course.day_time.length == 0 ? true : false}
+          onClick={() => saveChanges()}
+        >
+          Save
+        </button>
       </div>
     </div>
   );

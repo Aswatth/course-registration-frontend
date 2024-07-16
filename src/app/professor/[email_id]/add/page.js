@@ -1,11 +1,14 @@
 "use client";
 import { useEffect, useState } from "react";
 import * as utils from "@/app/(utils)/auth";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import * as professor_client from "@/app/(clients)/professor/offered_course_client";
 import OfferCourse from "./offered_course";
 
+import style from "./available_courses.module.css";
+
 export default function AddOfferedCourse() {
+  const router = useRouter();
   const params = useParams();
 
   const [course_list, setCourseList] = useState([]);
@@ -23,7 +26,17 @@ export default function AddOfferedCourse() {
   }, []);
 
   const no_content = (message) => {
-    return <div>{message}</div>;
+    return (
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <h4>{message}</h4>
+      </div>
+    );
   };
 
   const course_content = () => {
@@ -62,17 +75,42 @@ export default function AddOfferedCourse() {
   };
 
   return (
-    <div>
-      Add offered course
-      <div style={{ display: "flex", flexDirection: "row" }}>
-        <div style={{ flex: "1" }}>
-          Available Courses
-          {course_list == null
-            ? no_content("No courses available to offer")
-            : course_content()}
+    <div className={style["page"]}>
+      <div className={style["header"]}>
+        <button onClick={() => router.back()}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-chevron-compact-left"
+            viewBox="0 0 16 16"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M9.224 1.553a.5.5 0 0 1 .223.67L6.56 8l2.888 5.776a.5.5 0 1 1-.894.448l-3-6a.5.5 0 0 1 0-.448l3-6a.5.5 0 0 1 .67-.223"
+            />
+          </svg>
+        </button>
+        <h1>Add offered course</h1>
+      </div>
+      <div className={style["content"]}>
+        <div className={style["sub-content"]}>
+          <div className={style["sub-header"]}>
+            <h3>Available Courses</h3>
+          </div>
+          <div className={style["sub-content"]}>
+            {course_list == null
+              ? no_content("No courses available to offer")
+              : course_content()}
+          </div>
         </div>
-        <div style={{ flex: "1" }}>
-          Offer course
+        <div style={{ borderRight: "10px solid black" }}></div>
+        <div className={style["sub-content"]}>
+          <div className={style["sub-header"]}>
+            <h3>Offer Course</h3>
+          </div>
+          <div></div>
           {selected_course == null ? (
             no_content("No course selected to offer")
           ) : (

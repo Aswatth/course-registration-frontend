@@ -1,0 +1,58 @@
+.content {
+  flex: 1;
+  margin: calc(var(--default-margin) * 8);
+}
+
+.input-decoration {
+  position: relative;
+  display: flex;
+  width: 100%;
+}
+.input-decoration input {
+  width: 100%;
+  border-radius: calc(var(--default-border-radius) * 4);
+  padding: calc(var(--default-padding) * 4);
+  background-color: hsl(var(--grey200));
+  outline: none;
+  color: hsl(var(--base-color800));
+  margin-bottom: calc(var(--default-margin) * 15);
+}
+
+.input-decoration span {
+  position: absolute;
+  left: 10;
+  padding: calc(var(--default-padding) * 4);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  pointer-events: none;
+  color: hsla(var(--base-color800), 0.5);
+  transition: 0.5s;
+}
+
+.input-decoration input:valid ~ span,
+.input-decoration input:focus ~ span {
+  color: hsl(var(--base-color800));
+  transform: translateX(10px) translateY(-20px);
+  background-color: white;
+  color: hsl(var(--base-color800));
+  padding: calc(var(--default-padding) * 2);
+  font-size: 0.8em;
+  font-weight: bold;
+  border-radius: 10px;
+  border: solid 2px hsl(var(--base-color800), 0.2);
+}
+
+.day-picker {
+  padding: calc(var(--default-padding) * 2);
+  border: solid 2px hsl(var(--base-color800), 1);
+}
+
+.day-picker option {
+  padding: calc(var(--default-padding) * 2);
+  color: hsl(var(--base-color800));
+}
+
+.time-picker {
+  padding: calc(var(--default-padding) * 2);
+  color: hsl(var(--base-color800));
+}
