@@ -5,6 +5,7 @@ import * as admin_client from "@/app/(clients)/admin/student_client";
 import { useState } from "react";
 
 import style from "./add_student.module.css";
+import toast from "react-hot-toast";
 
 export default function AddStudent() {
   const router = useRouter();
@@ -13,9 +14,10 @@ export default function AddStudent() {
   function createNewStudent() {
     admin_client.CreateStudent(student_data).then((status) => {
       if (status == 200) {
+        toast.success("Successfully created a new student profile!");
         router.back();
       } else {
-        alert("Error occured while creating new student profile");
+        toast.error("Error occured while creating new student profile");
       }
     });
   }

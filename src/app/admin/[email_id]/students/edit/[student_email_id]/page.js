@@ -5,6 +5,7 @@ import * as admin_client from "@/app/(clients)/admin/student_client";
 import { useRouter, useParams } from "next/navigation";
 
 import style from "./edit_student.module.css";
+import toast from "react-hot-toast";
 
 export default function EditStudent() {
   const [student_data, setStudentData] = useState({});
@@ -21,9 +22,10 @@ export default function EditStudent() {
   function updateStudent() {
     admin_client.UpdateStudent(student_data).then((status) => {
       if (status == 200) {
+        toast.success("Successfully updated student profile!");
         router.back();
       } else {
-        alert("Error occured while updating student details");
+        toast.error("Error occured while updating student details");
       }
     });
   }

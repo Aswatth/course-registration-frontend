@@ -5,6 +5,7 @@ import * as admin_client from "@/app/(clients)/admin/professor_client";
 import { useState } from "react";
 
 import style from "./add_professor.module.css";
+import toast from "react-hot-toast";
 
 export default function AddProfessor() {
   const router = useRouter();
@@ -13,9 +14,10 @@ export default function AddProfessor() {
   function createNewProfessor() {
     admin_client.CreateProfessor(professor_data).then((status) => {
       if (status == 200) {
+        toast.success("Successfully create a new professor profile");
         router.back();
       } else {
-        alert("Error occured while creating new professor profile");
+        toast.error("Error occured while creating new professor profile");
       }
     });
   }

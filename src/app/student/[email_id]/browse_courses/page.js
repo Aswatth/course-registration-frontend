@@ -5,6 +5,7 @@ import * as student_client from "@/app/(clients)/student/register_course_client"
 import { useParams, useRouter } from "next/navigation";
 
 import style from "./browse_courses.module.css";
+import toast from "react-hot-toast";
 
 export default function BrowseOfferedCourses() {
   const params = useParams();
@@ -35,8 +36,9 @@ export default function BrowseOfferedCourses() {
     };
     student_client.RegisterCourses(final_data).then((response) => {
       if (response != undefined && response["response"] != undefined) {
-        alert(response["response"]);
+        toast.error(response["response"]);
       } else {
+        toast.success("Successfully updated courses!");
         router.back();
       }
     });
@@ -181,7 +183,7 @@ export default function BrowseOfferedCourses() {
                               m.crn,
                             ]);
                           } else {
-                            alert(m.crn + " already registered");
+                            toast.error(m.crn + " already registered");
                           }
                         }}
                       >

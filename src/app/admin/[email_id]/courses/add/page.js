@@ -4,6 +4,7 @@ import * as admin_client from "@/app/(clients)/admin/course_client";
 import { useRouter } from "next/navigation";
 
 import style from "./add_courses.module.css";
+import toast from "react-hot-toast";
 
 export default function AddCourse() {
   const router = useRouter();
@@ -12,9 +13,10 @@ export default function AddCourse() {
   function createNewCourse() {
     admin_client.CreateCourse(new_course).then((status) => {
       if (status == 200) {
+        toast.success("Successfully create a new course!");
         router.back();
       } else {
-        alert("Error occured while creating a new course");
+        toast.error("Error occured while creating a new course");
       }
     });
   }

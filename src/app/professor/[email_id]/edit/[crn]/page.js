@@ -5,6 +5,7 @@ import * as professor_client from "@/app/(clients)/professor/offered_course_clie
 import { useRouter, useParams } from "next/navigation";
 
 import style from "./edit_offered_course.module.css";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function EditOfferedCourse() {
   const day_list = [
@@ -35,8 +36,9 @@ export default function EditOfferedCourse() {
   function saveChanges() {
     professor_client.UpdateOfferedCourse(offered_course).then((response) => {
       if (response["response"] != undefined) {
-        alert(response["response"]);
+        toast.error(response["response"]);
       } else {
+        toast.success("Sucessfully saved!");
         router.back();
       }
     });
@@ -133,7 +135,7 @@ export default function EditOfferedCourse() {
                         (f) => f.day == selected_day
                       );
                       if (filtered_data.length != 0) {
-                        alert("Selected day already exists");
+                        toast.error("Selected day already exists");
                       } else {
                         existing_day_time.push({
                           day: selected_day,

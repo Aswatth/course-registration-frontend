@@ -6,6 +6,7 @@ import * as student_client from "@/app/(clients)/student/register_course_client"
 import { logout } from "@/app/(clients)/login_client";
 
 import style from "./student.module.css";
+import toast from "react-hot-toast";
 
 export default function StudentHomePage() {
   const router = useRouter();
@@ -36,7 +37,7 @@ export default function StudentHomePage() {
       })
       .then((response) => {
         if (response != undefined && response["response"] != undefined) {
-          alert(response["response"]);
+          toast.error(response["response"]);
         } else {
           var update_data = registered_courses.filter(
             (f) => f.offered_course.crn != crn

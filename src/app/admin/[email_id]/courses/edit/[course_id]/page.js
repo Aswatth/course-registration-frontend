@@ -4,6 +4,7 @@ import * as admin_client from "@/app/(clients)/admin/course_client";
 import { useParams, useRouter } from "next/navigation";
 
 import style from "./edit_course.module.css";
+import toast from "react-hot-toast";
 
 export default function EditCourse() {
   const router = useRouter();
@@ -21,9 +22,10 @@ export default function EditCourse() {
   function updateCourse() {
     admin_client.UpdateCourse(course).then((status) => {
       if (status == 200) {
+        toast.success("Succefully updated course!");
         router.back();
       } else {
-        alert("Error occured while creating a new course");
+        toast.error("Error occured while creating a new course");
       }
     });
   }

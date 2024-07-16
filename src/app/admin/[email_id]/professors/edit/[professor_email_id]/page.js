@@ -5,6 +5,7 @@ import * as admin_client from "@/app/(clients)/admin/professor_client";
 import { useRouter, useParams } from "next/navigation";
 
 import style from "./edit_professor.module.css";
+import toast from "react-hot-toast";
 
 export default function EditProfessor() {
   const [professor_data, setProfessorData] = useState({});
@@ -21,9 +22,10 @@ export default function EditProfessor() {
   function updateProfessor() {
     admin_client.UpdateProfessor(professor_data).then((status) => {
       if (status == 200) {
+        toast.success("Successfully updated professor profile!");
         router.back();
       } else {
-        alert("Error occured while updating professor details");
+        toast.error("Error occured while updating professor details");
       }
     });
   }
