@@ -20,7 +20,12 @@ export default function AdminHome() {
     <div className={style["page"]}>
       <div className={style["header"]}>
         <h1>Welcome Admin</h1>
-        <button className={style["header-button"]} onClick={() => {}}>
+        <button
+          className={style["header-button"]}
+          onClick={() => {
+            router.push("/update_password");
+          }}
+        >
           Change password
         </button>
         <button

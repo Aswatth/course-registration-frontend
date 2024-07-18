@@ -41,6 +41,14 @@ export default function ProfessorHomePage() {
         <button
           className={style["header-button"]}
           onClick={() => {
+            router.push("/update_password");
+          }}
+        >
+          Change password
+        </button>
+        <button
+          className={style["header-button"]}
+          onClick={() => {
             logout().then(() => {
               router.back("login");
             });
