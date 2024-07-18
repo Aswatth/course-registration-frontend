@@ -5,6 +5,7 @@ import * as admin_client from "@/app/(clients)/admin/course_client";
 import { useParams, useRouter } from "next/navigation";
 
 import style from "./courses_page.module.css";
+import toast from "react-hot-toast";
 
 export default function CoursePage() {
   const router = useRouter();
@@ -22,11 +23,11 @@ export default function CoursePage() {
   }, []);
 
   function deleteCourse(course_id) {
-    admin_client.DeleteCourse(course_id).then((status) => {
-      if (status == 200) {
+    admin_client.DeleteCourse(course_id).then((response) => {
+      if (response == null || response == undefined) {
         setCourseList(course_list.filter((f) => f.course_id != course_id));
       } else {
-        alert("Error occured while deleting course");
+        toast.error(response["response"]);
       }
     });
   }

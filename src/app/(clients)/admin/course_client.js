@@ -75,6 +75,7 @@ export const UpdateCourse = async (course) => {
 };
 
 export const DeleteCourse = async (course_id) => {
+  var body = null;
   try {
     const response = await fetch(API + "/courses/" + course_id, {
       method: "DELETE",
@@ -82,9 +83,11 @@ export const DeleteCourse = async (course_id) => {
         Authorization: cookies().get(COOKIE_NAME).value,
       },
     });
-    return response.status;
+    if (response.status != 200) {
+      body = await response.json();
+    }
   } catch {
     console.log("UNABLE TO DELETE COURSE DATA");
   }
-  return null;
+  return body;
 };
