@@ -5,6 +5,7 @@ import * as admin_client from "@/app/(clients)/admin/student_client";
 import { useParams, useRouter } from "next/navigation";
 
 import style from "./students.module.css";
+import toast from "react-hot-toast";
 
 export default function StudentPage() {
   const router = useRouter();
@@ -23,10 +24,14 @@ export default function StudentPage() {
   }, []);
 
   const delete_student = async (student_email_id) => {
-    admin_client.DeleteStudent(student_email_id).then(() => {
-      setStudentList(
-        student_list.filter((f) => f.email_id != student_email_id)
-      );
+    admin_client.DeleteStudent(student_email_id).then((response) => {
+      if (response == null || response == undefined) {
+        setStudentList(
+          student_list.filter((f) => f.email_id != student_email_id)
+        );
+      } else {
+        toast.error(response["response"]);
+      }
     });
   };
 

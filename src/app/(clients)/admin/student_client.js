@@ -71,6 +71,7 @@ export const UpdateStudent = async (student_data) => {
 };
 
 export const DeleteStudent = async (student_email_id) => {
+  var body = null;
   try {
     const response = await fetch(API + "/students/" + student_email_id, {
       method: "DELETE",
@@ -79,9 +80,10 @@ export const DeleteStudent = async (student_email_id) => {
       },
     });
     if (response.status != 200) {
-      throw Error();
+      body = await response.json();
     }
   } catch {
     console.log("UNABLE TO DELETE STUDENT DATA");
   }
+  return body;
 };
