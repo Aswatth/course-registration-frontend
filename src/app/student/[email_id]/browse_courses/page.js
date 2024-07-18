@@ -45,7 +45,7 @@ export default function BrowseOfferedCourses() {
   }
 
   function displayRegisteredCourses() {
-    if (registered_courses.length != 0) {
+    if (registered_courses != null || registered_courses.length != 0) {
       return (
         <div className={style["sub-content"]}>
           <table>

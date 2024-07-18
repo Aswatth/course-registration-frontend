@@ -48,7 +48,7 @@ export default function StudentHomePage() {
   }
 
   function displayRegisteredCourses() {
-    if (registered_courses.length == 0) {
+    if (registered_courses == null || registered_courses.length == 0) {
       return <div>No registered courses</div>;
     } else {
       return (
