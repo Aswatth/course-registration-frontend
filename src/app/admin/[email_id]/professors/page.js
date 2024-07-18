@@ -4,6 +4,7 @@ import * as utils from "@/app/(utils)/auth";
 import * as admin_client from "@/app/(clients)/admin/professor_client";
 import { useRouter, useParams } from "next/navigation";
 import style from "./professors.module.css";
+import toast from "react-hot-toast";
 
 export default function ProfessorsPage() {
   const router = useRouter();
@@ -21,10 +22,14 @@ export default function ProfessorsPage() {
   }, []);
 
   const delete_professor = (professor_email_id) => {
-    admin_client.DeleteProfessor(professor_email_id).then(() => {
-      setProfessorList(
-        professor_list.filter((f) => f.email_id != professor_email_id)
-      );
+    admin_client.DeleteProfessor(professor_email_id).then((response) => {
+      if (response == null || response == undefined) {
+        setProfessorList(
+          professor_list.filter((f) => f.email_id != professor_email_id)
+        );
+      } else {
+        toast.error(response["response"]);
+      }
     });
   };
 

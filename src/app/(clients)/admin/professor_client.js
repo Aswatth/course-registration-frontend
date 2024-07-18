@@ -75,6 +75,7 @@ export const UpdateProfessor = async (professor_data) => {
 };
 
 export const DeleteProfessor = async (professor_email_id) => {
+  var body = null;
   try {
     const response = await fetch(API + "/professors/" + professor_email_id, {
       method: "DELETE",
@@ -83,9 +84,10 @@ export const DeleteProfessor = async (professor_email_id) => {
       },
     });
     if (response.status != 200) {
-      throw Error();
+      body = await response.json();
     }
   } catch {
     console.log("UNABLE TO DELETE PROFESSOR DATA");
   }
+  return body;
 };
