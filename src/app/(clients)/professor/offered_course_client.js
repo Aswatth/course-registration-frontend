@@ -43,6 +43,7 @@ export const GetOfferedCourseByProfessor = async (email_id) => {
 };
 
 export const DeleteOfferedCourse = async (crn) => {
+  var body = null;
   try {
     const response = await fetch(API + "/offered_course/" + crn, {
       method: "DELETE",
@@ -51,10 +52,13 @@ export const DeleteOfferedCourse = async (crn) => {
       },
     });
 
-    return response.status;
+    if (response.status != 200) {
+      body = await response.json();
+    }
   } catch {
     console.log("UNABLE TO DELETE OFFERED COURSE");
   }
+  return body;
 };
 
 export const GetAvailableCourses = async () => {

@@ -6,6 +6,7 @@ import { useParams, useRouter } from "next/navigation";
 import * as professor_client from "@/app/(clients)/professor/offered_course_client";
 import { logout } from "@/app/(clients)/login_client";
 import style from "./professor.module.css";
+import toast from "react-hot-toast";
 
 export default function ProfessorHomePage() {
   const router = useRouter();
@@ -24,12 +25,73 @@ export default function ProfessorHomePage() {
     });
   }, []);
 
+  function displayOfferedCourses() {
+    if (offered_courses == null || offered_courses.length == 0) {
+      return <div>No offered courses</div>;
+    } else {
+      return offered_courses.map((m) => {
+        return (
+          <table>
+            <thead>
+              <tr>
+                <th>CRN</th>
+                <th>Course Id</th>
+                <th>Day-Timing</th>
+                <th>Actions</th>
+              </tr>
+              {offered_courses.map((m) => {
+                return (
+                  <tr>
+                    <td>{m.crn}</td>
+                    <td>{m.course_id}</td>
+                    <td>
+                      {m.day_time.map((dt) => {
+                        return (
+                          <span>
+                            {dt.day}: {dt.start_time} - {dt.end_time}
+                            <br></br>
+                          </span>
+                        );
+                      })}
+                    </td>
+                    <td>
+                      <div className={style["actions"]}>
+                        <button
+                          className={style["edit-action"]}
+                          onClick={() =>
+                            router.push(
+                              decodeURIComponent(params.email_id) +
+                                "/edit/" +
+                                m.crn
+                            )
+                          }
+                        >
+                          Edit
+                        </button>
+                        <button
+                          className={style["delete-action"]}
+                          onClick={() => deleteOfferedCourse(m.crn)}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })}
+            </thead>
+          </table>
+        );
+      });
+    }
+  }
+
   function deleteOfferedCourse(crn) {
-    professor_client.DeleteOfferedCourse(crn).then((status) => {
-      if (status == 200) {
+    professor_client.DeleteOfferedCourse(crn).then((response) => {
+      if (response == null || response == undefined) {
         setOfferedCourses(offered_courses.filter((f) => f.crn != crn));
       } else {
-        alert("Error occured while deleting offered course");
+        toast.error(response["response"]);
       }
     });
   }
@@ -68,56 +130,7 @@ export default function ProfessorHomePage() {
             Offer a new course
           </button>
         </div>
-        <table>
-          <thead>
-            <tr>
-              <th>CRN</th>
-              <th>Course Id</th>
-              <th>Day-Timing</th>
-              <th>Actions</th>
-            </tr>
-            {offered_courses.map((m) => {
-              return (
-                <tr>
-                  <td>{m.crn}</td>
-                  <td>{m.course_id}</td>
-                  <td>
-                    {m.day_time.map((dt) => {
-                      return (
-                        <span>
-                          {dt.day}: {dt.start_time} - {dt.end_time}
-                          <br></br>
-                        </span>
-                      );
-                    })}
-                  </td>
-                  <td>
-                    <div className={style["actions"]}>
-                      <button
-                        className={style["edit-action"]}
-                        onClick={() =>
-                          router.push(
-                            decodeURIComponent(params.email_id) +
-                              "/edit/" +
-                              m.crn
-                          )
-                        }
-                      >
-                        Edit
-                      </button>
-                      <button
-                        className={style["delete-action"]}
-                        onClick={() => deleteOfferedCourse(m.crn)}
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              );
-            })}
-          </thead>
-        </table>
+        {displayOfferedCourses()}
       </div>
     </div>
   );
