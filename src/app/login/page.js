@@ -6,21 +6,37 @@ import { useRouter } from "next/navigation";
 
 export default function Login() {
   const router = useRouter();
-  const [login_data, setLoginData] = useState({});
+  const [login_data, setLoginData] = useState(null);
   const [error_message, setErrorMessage] = useState("");
 
   function validateLogin() {
-    login_client.login(login_data).then((response) => {
-      if (response.status == 200) {
-        router.push(response.repsonse);
-      } else {
-        setErrorMessage(response.repsonse);
-      }
-    });
+    if (login_data == null) {
+      setErrorMessage("Email Id and Password cannot be empty");
+    } else if (Object.keys(login_data).length != 2) {
+      Object.keys(login_data).map((m) => {
+        if (m == "email_id") {
+          setErrorMessage("Password cannot be empty");
+        } else {
+          setErrorMessage("Email Id cannot be empty");
+        }
+      });
+    } else {
+      login_client.login(login_data).then((response) => {
+        if (response.status == 200) {
+          router.push(response.repsonse);
+        } else {
+          setErrorMessage(response.repsonse);
+        }
+      });
+    }
   }
 
   const displayErrorMessage = () => {
-    if (error_message.length == 0) {
+    if (
+      error_message == null ||
+      error_message == undefined ||
+      error_message.length == 0
+    ) {
       return <div></div>;
     } else {
       return (
