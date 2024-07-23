@@ -23,13 +23,42 @@ export default function CoursePage() {
   }, []);
 
   function deleteCourse(course_id) {
-    admin_client.DeleteCourse(course_id).then((response) => {
-      if (response == null || response == undefined) {
-        setCourseList(course_list.filter((f) => f.course_id != course_id));
-      } else {
-        toast.error(response["response"]);
-      }
-    });
+    // toast((t) => (
+    //   <span>
+    //     Custom and <b>bold</b>
+    //     <button onClick={() => toast.dismiss(t.id)}>Dismiss</button>
+    //   </span>
+    // ));
+    toast((t) => (
+      <span>
+        Delete Course with Id: <b>{course_id}</b> ?<br></br>
+        <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+          <button
+            style={{ background: "hsl(var(--green-accent800))" }}
+            onClick={() => {
+              admin_client.DeleteCourse(course_id).then((response) => {
+                if (response == null || response == undefined) {
+                  setCourseList(
+                    course_list.filter((f) => f.course_id != course_id)
+                  );
+                  toast.dismiss(t.id);
+                } else {
+                  toast.error(response["response"]);
+                }
+              });
+            }}
+          >
+            Yes
+          </button>
+          <button
+            style={{ background: "hsl(var(--red-accent600))" }}
+            onClick={() => toast.dismiss(t.id)}
+          >
+            No
+          </button>
+        </div>
+      </span>
+    ));
   }
 
   return (

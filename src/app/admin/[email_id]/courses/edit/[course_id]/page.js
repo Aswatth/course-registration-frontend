@@ -20,12 +20,33 @@ export default function EditCourse() {
   }, []);
 
   function updateCourse() {
-    admin_client.UpdateCourse(course).then((status) => {
-      if (status == 200) {
+    console.log(course);
+    //Validation
+    if (course.course_name == "") {
+      toast.error("Course name cannot be empty");
+      return;
+    } else if (course.course_description == "") {
+      toast.error("Course decription cannot be empty");
+      return;
+    } else if (isNaN(course.credits)) {
+      toast.error("Credits cannot be empty");
+      return;
+    } else if (course.department == "") {
+      toast.error("Department cannot be empty");
+      return;
+    }
+
+    if (course.credits == 0) {
+      toast.error("Credits cannot be zero!");
+      return;
+    }
+
+    admin_client.UpdateCourse(course).then((response) => {
+      if (response == null || response == undefined) {
         toast.success("Succefully updated course!");
         router.back();
       } else {
-        toast.error("Error occured while creating a new course");
+        toast.error(response["response"]);
       }
     });
   }

@@ -16,7 +16,6 @@ export const GetCourse = async (course_id) => {
     console.log(response);
     if (response.status == 200) {
       body = await response.json();
-      console.log(body);
     }
   } catch {
     console.log("UNABLE TO FETCH ALL COURSE DATA");
@@ -43,6 +42,7 @@ export const GetAllCourses = async () => {
 };
 
 export const CreateCourse = async (new_course) => {
+  var body = null;
   try {
     const response = await fetch(API + "/courses", {
       method: "POST",
@@ -51,14 +51,17 @@ export const CreateCourse = async (new_course) => {
       },
       body: JSON.stringify(new_course),
     });
-    return response.status;
+    if (response.status != 200) {
+      body = await response.json();
+    }
   } catch {
     console.log("UNABLE TO CREATE NEW COURSE");
   }
-  return null;
+  return body;
 };
 
 export const UpdateCourse = async (course) => {
+  var body = null;
   try {
     const response = await fetch(API + "/courses/" + course.course_id, {
       method: "PUT",
@@ -67,11 +70,13 @@ export const UpdateCourse = async (course) => {
       },
       body: JSON.stringify(course),
     });
-    return response.status;
+    if (response.status != 200) {
+      body = await response.json();
+    }
   } catch {
     console.log("UNABLE TO UPDATE COURSE");
   }
-  return null;
+  return body;
 };
 
 export const DeleteCourse = async (course_id) => {

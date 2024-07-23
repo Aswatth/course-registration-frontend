@@ -11,12 +11,52 @@ export default function AddCourse() {
   const [new_course, setCourse] = useState({});
 
   function createNewCourse() {
-    admin_client.CreateCourse(new_course).then((status) => {
-      if (status == 200) {
+    //Validation
+    if (!Object.keys(new_course).includes("course_id")) {
+      toast.error("Course Id cannot be empty");
+      return;
+    } else if (!Object.keys(new_course).includes("course_name")) {
+      toast.error("Course name cannot be empty");
+      return;
+    } else if (!Object.keys(new_course).includes("course_description")) {
+      toast.error("Course decription cannot be empty");
+      return;
+    } else if (!Object.keys(new_course).includes("credits")) {
+      toast.error("Credits cannot be empty");
+      return;
+    } else if (!Object.keys(new_course).includes("department")) {
+      toast.error("Department cannot be empty");
+      return;
+    }
+
+    if (isNaN(new_course.course_id)) {
+      toast.error("Course Id cannot be empty");
+      return;
+    } else if (new_course.course_name == "") {
+      toast.error("Course name cannot be empty");
+      return;
+    } else if (new_course.course_description == "") {
+      toast.error("Course decription cannot be empty");
+      return;
+    } else if (isNaN(new_course.credits)) {
+      toast.error("Credits cannot be empty");
+      return;
+    } else if (new_course.department == "") {
+      toast.error("Department cannot be empty");
+      return;
+    }
+
+    if (new_course.credits == 0) {
+      toast.error("Credits cannot be zero!");
+      return;
+    }
+
+    admin_client.CreateCourse(new_course).then((response) => {
+      if (response == null || response == undefined) {
         toast.success("Successfully create a new course!");
         router.back();
       } else {
-        toast.error("Error occured while creating a new course");
+        toast.error(response["response"]);
       }
     });
   }
