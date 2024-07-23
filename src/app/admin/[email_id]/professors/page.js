@@ -22,15 +22,40 @@ export default function ProfessorsPage() {
   }, []);
 
   const delete_professor = (professor_email_id) => {
-    admin_client.DeleteProfessor(professor_email_id).then((response) => {
-      if (response == null || response == undefined) {
-        setProfessorList(
-          professor_list.filter((f) => f.email_id != professor_email_id)
-        );
-      } else {
-        toast.error(response["response"]);
-      }
-    });
+    toast((t) => (
+      <span>
+        Delete <b>{professor_email_id}</b> profile?
+        <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+          <button
+            style={{ background: "hsl(var(--green-accent800))" }}
+            onClick={() => {
+              admin_client
+                .DeleteProfessor(professor_email_id)
+                .then((response) => {
+                  if (response == null || response == undefined) {
+                    setProfessorList(
+                      professor_list.filter(
+                        (f) => f.email_id != professor_email_id
+                      )
+                    );
+                  } else {
+                    toast.error(response["response"]);
+                  }
+                });
+              toast.dismiss(t.id);
+            }}
+          >
+            Yes
+          </button>
+          <button
+            style={{ background: "hsl(var(--red-accent600))" }}
+            onClick={() => toast.dismiss(t.id)}
+          >
+            No
+          </button>
+        </div>
+      </span>
+    ));
   };
 
   const no_content = () => {

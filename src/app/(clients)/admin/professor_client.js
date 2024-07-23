@@ -5,6 +5,7 @@ const API = process.env.NEXT_PUBLIC_API + "/admin";
 const COOKIE_NAME = process.env.NEXT_PUBLIC_COOKIE_NAME;
 
 export const CreateProfessor = async (professor_data) => {
+  var body = null;
   try {
     const response = await fetch(API + "/professors", {
       method: "POST",
@@ -13,10 +14,13 @@ export const CreateProfessor = async (professor_data) => {
         Authorization: cookies().get(COOKIE_NAME).value,
       },
     });
-    return response.status;
+    if (response.status != 200) {
+      body = await response.json();
+    }
   } catch {
     console.log("UNABLE TO CREATE NEW PROFESSOR PROFILE");
   }
+  return body;
 };
 
 export const GetAllProfessors = async () => {
@@ -68,10 +72,13 @@ export const UpdateProfessor = async (professor_data) => {
         },
       }
     );
-    return response.status;
+    if (response.status != 200) {
+      body = await response.json();
+    }
   } catch {
     console.log("UNABLE TO UPDATE PROFESSOR DATA");
   }
+  return body;
 };
 
 export const DeleteProfessor = async (professor_email_id) => {

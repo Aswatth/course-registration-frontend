@@ -12,12 +12,52 @@ export default function AddProfessor() {
   const [professor_data, setProfessorData] = useState({});
 
   function createNewProfessor() {
-    admin_client.CreateProfessor(professor_data).then((status) => {
-      if (status == 200) {
-        toast.success("Successfully create a new professor profile");
+    var professor_form_data = Object.keys(professor_data);
+
+    if (
+      !professor_form_data.includes("first_name") ||
+      professor_data.first_name == ""
+    ) {
+      toast.error("First name cannot be empty");
+      return;
+    } else if (
+      !professor_form_data.includes("last_name") ||
+      professor_data.last_name == ""
+    ) {
+      toast.error("Last name cannot be empty");
+      return;
+    } else if (
+      !professor_form_data.includes("email_id") ||
+      professor_data.email_id == ""
+    ) {
+      toast.error("Email Id cannot be empty");
+      return;
+    } else if (
+      !professor_form_data.includes("password") ||
+      professor_data.password == ""
+    ) {
+      toast.error("Password cannot be empty");
+      return;
+    } else if (
+      !professor_form_data.includes("designation") ||
+      professor_data.designation == ""
+    ) {
+      toast.error("Designation cannot be empty");
+      return;
+    } else if (
+      !professor_form_data.includes("department") ||
+      professor_data.department == ""
+    ) {
+      toast.error("Department cannot be empty");
+      return;
+    }
+
+    admin_client.CreateProfessor(professor_data).then((response) => {
+      if (response == null || response == undefined) {
+        toast.success("Successfully created a new professor profile");
         router.back();
       } else {
-        toast.error("Error occured while creating new professor profile");
+        toast.error(response["response"]);
       }
     });
   }
@@ -94,6 +134,9 @@ export default function AddProfessor() {
             value={professor_data.password}
             id="password"
             name="password"
+            onChange={(e) =>
+              setProfessorData({ ...professor_data, password: e.target.value })
+            }
           ></input>
           <span>Password</span>
         </div>

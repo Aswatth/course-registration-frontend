@@ -20,12 +20,26 @@ export default function EditProfessor() {
   }, []);
 
   function updateProfessor() {
-    admin_client.UpdateProfessor(professor_data).then((status) => {
-      if (status == 200) {
+    if (professor_data.first_name == "") {
+      toast.error("First name cannot be empty");
+      return;
+    } else if (professor_data.last_name == "") {
+      toast.error("Last name cannot be empty");
+      return;
+    } else if (professor_data.designation == "") {
+      toast.error("Designation cannot be empty");
+      return;
+    } else if (professor_data.department == "") {
+      toast.error("Department cannot be empty");
+      return;
+    }
+
+    admin_client.UpdateProfessor(professor_data).then((response) => {
+      if (response == null || response == undefined) {
         toast.success("Successfully updated professor profile!");
         router.back();
       } else {
-        toast.error("Error occured while updating professor details");
+        toast.error(response["response"]);
       }
     });
   }
