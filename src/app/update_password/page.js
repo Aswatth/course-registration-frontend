@@ -15,9 +15,11 @@ export default function ChangePassword() {
   function updatePassword() {
     if (new_password == "" && confirm_new_password == "") {
       toast.error("New password cannot be empty");
+      return;
     }
     if (new_password != confirm_new_password) {
       toast.error("Password does not match!");
+      return;
     } else {
       UpdatePassword(new_password).then((response) => {
         if (response == null || response == undefined) {
