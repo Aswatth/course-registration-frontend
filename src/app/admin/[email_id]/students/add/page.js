@@ -12,12 +12,46 @@ export default function AddStudent() {
   const [student_data, setStudentData] = useState({});
 
   function createNewStudent() {
-    admin_client.CreateStudent(student_data).then((status) => {
-      if (status == 200) {
+    var student_form_data = Object.keys(student_data);
+
+    if (
+      !student_form_data.includes("first_name") ||
+      student_data.first_name == ""
+    ) {
+      toast.error("First name cannot be empty");
+      return;
+    } else if (
+      !student_form_data.includes("last_name") ||
+      student_data.last_name == ""
+    ) {
+      toast.error("Last name cannot be empty");
+      return;
+    } else if (
+      !student_form_data.includes("email_id") ||
+      student_data.email_id == ""
+    ) {
+      toast.error("Email Id cannot be empty");
+      return;
+    } else if (
+      !student_form_data.includes("password") ||
+      student_data.password == ""
+    ) {
+      toast.error("Password cannot be empty");
+      return;
+    } else if (
+      !student_form_data.includes("program_enrolled") ||
+      student_data.program_enrolled == ""
+    ) {
+      toast.error("Program enrolled cannot be empty");
+      return;
+    }
+
+    admin_client.CreateStudent(student_data).then((response) => {
+      if (response == null || response == undefined) {
         toast.success("Successfully created a new student profile!");
         router.back();
       } else {
-        toast.error("Error occured while creating new student profile");
+        toast.error(response["response"]);
       }
     });
   }
@@ -92,6 +126,9 @@ export default function AddStudent() {
             value={student_data.password}
             id="password"
             name="password"
+            onChange={(e) =>
+              setStudentData({ ...student_data, password: e.target.value })
+            }
           ></input>
           <span>Password</span>
         </div>

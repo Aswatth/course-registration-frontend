@@ -20,12 +20,23 @@ export default function EditStudent() {
   }, []);
 
   function updateStudent() {
-    admin_client.UpdateStudent(student_data).then((status) => {
-      if (status == 200) {
+    if (student_data.first_name == "") {
+      toast.error("First name cannot be empty");
+      return;
+    } else if (student_data.last_name == "") {
+      toast.error("Last name cannot be empty");
+      return;
+    } else if (student_data.program_enrolled == "") {
+      toast.error("Program enrolled cannot be empty");
+      return;
+    }
+
+    admin_client.UpdateStudent(student_data).then((response) => {
+      if (response == null || response == undefined) {
         toast.success("Successfully updated student profile!");
         router.back();
       } else {
-        toast.error("Error occured while updating student details");
+        toast.error(response["response"]);
       }
     });
   }

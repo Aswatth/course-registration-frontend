@@ -5,6 +5,7 @@ const API = process.env.NEXT_PUBLIC_API + "/admin";
 const COOKIE_NAME = process.env.NEXT_PUBLIC_COOKIE_NAME;
 
 export const CreateStudent = async (student_data) => {
+  var body = null;
   try {
     const response = await fetch(API + "/students", {
       method: "POST",
@@ -13,10 +14,13 @@ export const CreateStudent = async (student_data) => {
         Authorization: cookies().get(COOKIE_NAME).value,
       },
     });
-    return response.status;
+    if (response.status != 200) {
+      body = await response.json();
+    }
   } catch {
     console.log("UNABLE TO UPDATE STUDENT DATA");
   }
+  return body;
 };
 
 export const GetAllStudents = async () => {
@@ -56,6 +60,7 @@ export const GetStudent = async (email_id) => {
 };
 
 export const UpdateStudent = async (student_data) => {
+  var body = null;
   try {
     const response = await fetch(API + "/students/" + student_data.email_id, {
       method: "PUT",
@@ -64,10 +69,13 @@ export const UpdateStudent = async (student_data) => {
         Authorization: cookies().get(COOKIE_NAME).value,
       },
     });
-    return response.status;
+    if (response.status != 200) {
+      body = await response.json();
+    }
   } catch {
     console.log("UNABLE TO UPDATE STUDENT DATA");
   }
+  return body;
 };
 
 export const DeleteStudent = async (student_email_id) => {
