@@ -80,6 +80,7 @@ export const GetAvailableCourses = async () => {
 };
 
 export const OfferCourse = async (offered_course) => {
+  var body = null;
   try {
     const response = await fetch(API + "/offered_course", {
       method: "POST",
@@ -88,13 +89,18 @@ export const OfferCourse = async (offered_course) => {
       },
       body: JSON.stringify(offered_course),
     });
-    return await response.json();
+
+    if (response.status != 200) {
+      body = await response.json();
+    }
   } catch {
     console.log("UNABLE TO OFFER COURSES");
   }
+  return body;
 };
 
 export const UpdateOfferedCourse = async (offered_course) => {
+  var body = null;
   var data = { day_time: offered_course.day_time };
   try {
     const response = await fetch(
@@ -107,8 +113,11 @@ export const UpdateOfferedCourse = async (offered_course) => {
         body: JSON.stringify(data),
       }
     );
-    return await response.json();
+    if (response.status != 200) {
+      body = await response.json();
+    }
   } catch {
     console.log("UNABLE TO UPDATE AVAILABLE COURSES");
   }
+  return body;
 };

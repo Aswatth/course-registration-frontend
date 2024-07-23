@@ -28,6 +28,11 @@ export default function OfferCourse({ selected_course }) {
   const params = useParams();
 
   function offerCourse() {
+    if (crn == null || crn == undefined || crn == 0) {
+      toast.error("CRN cannot be empty or zero");
+      return;
+    }
+
     var email_id = decodeURIComponent(params.email_id);
 
     var offered_course = {
@@ -122,23 +127,41 @@ export default function OfferCourse({ selected_course }) {
               <td>
                 <button
                   onClick={() => {
+                    if (
+                      selected_start_time == null ||
+                      selected_start_time == undefined ||
+                      selected_start_time == ""
+                    ) {
+                      toast.error("Start time cannot be empty");
+                      return;
+                    }
+
+                    if (
+                      selected_end_time == null ||
+                      selected_end_time == undefined ||
+                      selected_end_time == ""
+                    ) {
+                      toast.error("End time cannot be empty");
+                      return;
+                    }
                     var filtered_data = day_time_list.filter(
                       (f) => f.day == selected_day
                     );
-                    console.log(day_time_list, filtered_data);
+
                     if (filtered_data.length != 0) {
                       toast.error("Selected day already exists");
-                    } else {
-                      var data = [
-                        ...day_time_list,
-                        {
-                          day: selected_day,
-                          start_time: selected_start_time,
-                          end_time: selected_end_time,
-                        },
-                      ];
-                      setDayTimeList(data);
+                      return;
                     }
+
+                    var data = [
+                      ...day_time_list,
+                      {
+                        day: selected_day,
+                        start_time: selected_start_time,
+                        end_time: selected_end_time,
+                      },
+                    ];
+                    setDayTimeList(data);
                   }}
                 >
                   Add

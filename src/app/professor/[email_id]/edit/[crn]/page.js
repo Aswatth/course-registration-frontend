@@ -35,11 +35,11 @@ export default function EditOfferedCourse() {
 
   function saveChanges() {
     professor_client.UpdateOfferedCourse(offered_course).then((response) => {
-      if (response["response"] != undefined) {
-        toast.error(response["response"]);
-      } else {
+      if (response == null || response == undefined) {
         toast.success("Sucessfully saved!");
         router.back();
+      } else {
+        toast.error(response["response"]);
       }
     });
   }
@@ -134,19 +134,38 @@ export default function EditOfferedCourse() {
                       var filtered_data = existing_day_time.filter(
                         (f) => f.day == selected_day
                       );
+
+                      if (
+                        selected_start_time == null ||
+                        selected_start_time == undefined ||
+                        selected_start_time == ""
+                      ) {
+                        toast.error("Start time cannot be empty");
+                        return;
+                      }
+
+                      if (
+                        selected_end_time == null ||
+                        selected_end_time == undefined ||
+                        selected_end_time == ""
+                      ) {
+                        toast.error("End time cannot be empty");
+                        return;
+                      }
+
                       if (filtered_data.length != 0) {
                         toast.error("Selected day already exists");
-                      } else {
-                        existing_day_time.push({
-                          day: selected_day,
-                          start_time: selected_start_time,
-                          end_time: selected_end_time,
-                        });
-                        setOfferedCourse({
-                          ...offered_course,
-                          day_time: existing_day_time,
-                        });
+                        return;
                       }
+                      existing_day_time.push({
+                        day: selected_day,
+                        start_time: selected_start_time,
+                        end_time: selected_end_time,
+                      });
+                      setOfferedCourse({
+                        ...offered_course,
+                        day_time: existing_day_time,
+                      });
                     }}
                   >
                     Add
