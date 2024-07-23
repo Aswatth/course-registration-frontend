@@ -44,6 +44,7 @@ export const GetRegisteredCourses = async (email_id) => {
 };
 
 export const RegisterCourses = async (registered_courses) => {
+  var body = null;
   try {
     const response = await fetch(API + "/register_course", {
       method: "POST",
@@ -52,23 +53,36 @@ export const RegisterCourses = async (registered_courses) => {
       },
       body: JSON.stringify(registered_courses),
     });
-    return await response.json();
+    if (response.status != 200) {
+      body = await response.json();
+    }
   } catch {
     console.log("UNABLE TO REGISTER COURSES");
   }
+  return body;
 };
 
-export const UpdateRegisteredCourses = async (email_id, updated_registered_courses) => {
+export const UpdateRegisteredCourses = async (
+  email_id,
+  updated_registered_courses
+) => {
+  var body = null;
   try {
-    const response = await fetch(API + "/register_course?email_id="+email_id, {
-      method: "PUT",
-      headers: {
-        Authorization: cookies().get(COOKIE_NAME).value,
-      },
-      body: JSON.stringify(updated_registered_courses),
-    });
-    return await response.json();
+    const response = await fetch(
+      API + "/register_course?email_id=" + email_id,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: cookies().get(COOKIE_NAME).value,
+        },
+        body: JSON.stringify(updated_registered_courses),
+      }
+    );
+    if (response.status != 200) {
+      body = await response.json();
+    }
   } catch {
     console.log("UNABLE TO UPDATE REGISTERED COURSES");
   }
+  return body;
 };

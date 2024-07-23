@@ -30,16 +30,24 @@ export default function BrowseOfferedCourses() {
   }, []);
 
   function saveRegisteredCourses() {
+    if (
+      registered_courses == undefined ||
+      registered_courses == null ||
+      registered_courses.length == 0
+    ) {
+      toast.error("No courses registered");
+      return;
+    }
     var final_data = {
       student_email_id: decodeURIComponent(params.email_id),
       registered_course_crns: registered_courses,
     };
     student_client.RegisterCourses(final_data).then((response) => {
-      if (response != undefined && response["response"] != undefined) {
-        toast.error(response["response"]);
-      } else {
+      if (response == null || response == undefined) {
         toast.success("Successfully updated courses!");
         router.back();
+      } else {
+        toast.error(response["response"]);
       }
     });
   }
@@ -183,7 +191,9 @@ export default function BrowseOfferedCourses() {
                               m.crn,
                             ]);
                           } else {
-                            toast.error(m.crn + " already registered");
+                            toast.error(
+                              "CRN: " + m.crn + " already registered"
+                            );
                           }
                         }}
                       >

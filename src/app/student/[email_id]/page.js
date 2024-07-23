@@ -29,22 +29,44 @@ export default function StudentHomePage() {
   }, []);
 
   function withdrawCourse(crn) {
-    var email_id = decodeURIComponent(params.email_id);
-    var updated_crn_list = register_crns.filter((f) => f != crn);
-    student_client
-      .UpdateRegisteredCourses(email_id, {
-        registered_course_crns: updated_crn_list,
-      })
-      .then((response) => {
-        if (response != undefined && response["response"] != undefined) {
-          toast.error(response["response"]);
-        } else {
-          var update_data = registered_courses.filter(
-            (f) => f.offered_course.crn != crn
-          );
-          setRegisteredCourses(update_data);
-        }
-      });
+    toast((t) => (
+      <span>
+        Withdraw from course <b>CRN: {crn}</b>?
+        <div style={{ display: "flex", justifyContent: "space-evenly" }}>
+          <button
+            style={{ background: "hsl(var(--green-accent800))" }}
+            onClick={() => {
+              var email_id = decodeURIComponent(params.email_id);
+              var updated_crn_list = register_crns.filter((f) => f != crn);
+              student_client
+                .UpdateRegisteredCourses(email_id, {
+                  registered_course_crns: updated_crn_list,
+                })
+                .then((response) => {
+                  if (response == null || response == undefined) {
+                    toast.success("Successfully withdrew from " + crn);
+                    var update_data = registered_courses.filter(
+                      (f) => f.offered_course.crn != crn
+                    );
+                    setRegisteredCourses(update_data);
+                  } else {
+                    toast.error(response["response"]);
+                  }
+                });
+              toast.dismiss(t.id);
+            }}
+          >
+            Yes
+          </button>
+          <button
+            style={{ background: "hsl(var(--red-accent600))" }}
+            onClick={() => toast.dismiss(t.id)}
+          >
+            No
+          </button>
+        </div>
+      </span>
+    ));
   }
 
   function displayRegisteredCourses() {
