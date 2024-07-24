@@ -3,12 +3,14 @@
 import { useEffect, useState } from "react";
 import * as utils from "@/app/(utils)/auth";
 import { useParams, useRouter } from "next/navigation";
+import { GetProfessorProfile } from "@/app/(clients)/professor/professor_client";
 import * as professor_client from "@/app/(clients)/professor/offered_course_client";
 import { logout } from "@/app/(clients)/login_client";
 import style from "./professor.module.css";
 import toast from "react-hot-toast";
 
 export default function ProfessorHomePage() {
+  const [professor_profile, setProfessorProfile] = useState({});
   const router = useRouter();
   const params = useParams();
 
@@ -18,6 +20,10 @@ export default function ProfessorHomePage() {
     var email_id = decodeURIComponent(params.email_id);
     utils.checkAuth("PROFESSOR", email_id).then((value) => {
       if (value == true) {
+        GetProfessorProfile(email_id).then((value) => {
+          setProfessorProfile(value);
+        });
+
         professor_client.GetOfferedCourseByProfessor(email_id).then((data) => {
           setOfferedCourses(data);
         });
@@ -120,7 +126,9 @@ export default function ProfessorHomePage() {
   return (
     <div className={style["page"]}>
       <div className={style["header"]}>
-        <h1>Welcome Professor</h1>
+        <h1>
+          Welcome {professor_profile.last_name}, {professor_profile.first_name}
+        </h1>
         <button
           className={style["header-button"]}
           onClick={() => {
