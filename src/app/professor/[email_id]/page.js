@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import * as utils from "@/app/(utils)/auth";
 import { useParams, useRouter } from "next/navigation";
 import { GetProfessorProfile } from "@/app/(clients)/professor/professor_client";
 import * as professor_client from "@/app/(clients)/professor/offered_course_client";
 import { logout } from "@/app/(clients)/login_client";
 import style from "./professor.module.css";
 import toast from "react-hot-toast";
+import { checkAuth } from "@/app/(utils)/auth";
 
 export default function ProfessorHomePage() {
   const [professor_profile, setProfessorProfile] = useState({});
@@ -18,7 +18,7 @@ export default function ProfessorHomePage() {
 
   useEffect(() => {
     var email_id = decodeURIComponent(params.email_id);
-    utils.checkAuth("PROFESSOR", email_id).then((value) => {
+    checkAuth("PROFESSOR", email_id).then((value) => {
       if (value == true) {
         GetProfessorProfile(email_id).then((value) => {
           setProfessorProfile(value);

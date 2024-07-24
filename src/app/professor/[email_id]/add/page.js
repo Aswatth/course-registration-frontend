@@ -1,11 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
-import * as utils from "@/app/(utils)/auth";
 import { useParams, useRouter } from "next/navigation";
 import * as professor_client from "@/app/(clients)/professor/offered_course_client";
 import OfferCourse from "./offered_course";
 
 import style from "./available_courses.module.css";
+import { checkAuth } from "@/app/(utils)/auth";
 
 export default function AddOfferedCourse() {
   const router = useRouter();
@@ -16,7 +16,7 @@ export default function AddOfferedCourse() {
 
   useEffect(() => {
     var email_id = decodeURIComponent(params.email_id);
-    utils.checkAuth("PROFESSOR", email_id).then((value) => {
+    checkAuth("PROFESSOR", email_id).then((value) => {
       if (value == true) {
         professor_client.GetAvailableCourses().then((data) => {
           setCourseList(data);

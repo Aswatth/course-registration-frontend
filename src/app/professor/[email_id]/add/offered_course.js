@@ -5,7 +5,7 @@ import * as professor_client from "@/app/(clients)/professor/offered_course_clie
 import { useParams } from "next/navigation";
 
 import style from "./offer_course.module.css";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 export default function OfferCourse({ selected_course }) {
   const day_list = [

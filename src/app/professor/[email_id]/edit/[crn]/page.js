@@ -5,7 +5,8 @@ import * as professor_client from "@/app/(clients)/professor/offered_course_clie
 import { useRouter, useParams } from "next/navigation";
 
 import style from "./edit_offered_course.module.css";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
+import { checkAuth } from "@/app/(utils)/auth";
 
 export default function EditOfferedCourse() {
   const day_list = [
@@ -27,9 +28,14 @@ export default function EditOfferedCourse() {
   const parmas = useParams();
 
   useEffect(() => {
-    var CRN = decodeURIComponent(parmas.crn);
-    professor_client.GetOfferedCourseByCRN(CRN).then((data) => {
-      setOfferedCourse(data);
+    var email_id = decodeURIComponent(parmas.email_id);
+    checkAuth("PROFESSOR", email_id).then((value) => {
+      if (value) {
+        var CRN = decodeURIComponent(parmas.crn);
+        professor_client.GetOfferedCourseByCRN(CRN).then((data) => {
+          setOfferedCourse(data);
+        });
+      }
     });
   }, []);
 
