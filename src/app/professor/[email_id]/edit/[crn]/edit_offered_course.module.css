@@ -28,6 +28,7 @@
   display: flex;
   flex-direction: column;
   margin: calc(var(--default-margin) * 8);
+  margin-top: calc(var(--default-margin) * 15);
 }
 
 .input-decoration {
@@ -56,8 +57,7 @@
   transition: 0.5s;
 }
 
-.input-decoration input:valid ~ span,
-.input-decoration input:focus ~ span {
+.input-decoration input ~ span {
   color: hsl(var(--base-color800));
   transform: translateX(10px) translateY(-20px);
   background-color: white;
