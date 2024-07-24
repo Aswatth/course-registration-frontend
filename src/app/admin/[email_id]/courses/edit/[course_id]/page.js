@@ -79,8 +79,6 @@ export default function EditCourse() {
             id="course_id"
             name="course_id"
             required={true}
-            contentEditable={false}
-            contet
             disabled={true}
             value={course.course_id}
           ></input>

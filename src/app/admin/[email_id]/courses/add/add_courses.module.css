@@ -23,6 +23,7 @@
   display: flex;
   flex-direction: column;
   margin: calc(var(--default-margin) * 8);
+  margin-top: calc(var(--default-margin) * 15);
 }
 
 .input-decoration {
