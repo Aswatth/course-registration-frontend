@@ -6,11 +6,53 @@ import { useState } from "react";
 
 import style from "./add_student.module.css";
 import toast from "react-hot-toast";
+
+import * as PasswordValidator from "@/app/(utils)/password_validator";
+
 import { PROGRAM_LIST } from "@/app/(utils)/constants";
 
 export default function AddStudent() {
   const router = useRouter();
+  const [password_validation_data, setPasswordValidationData] = useState(
+    PasswordValidator.InitialValue()
+  );
   const [student_data, setStudentData] = useState({});
+
+  function password_validation_icon(value) {
+    if (value)
+      return (
+        <div
+          style={{ color: "hsl(var(--green-accent800))", display: "inline" }}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-check"
+            viewBox="0 0 16 16"
+          >
+            <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425z" />
+          </svg>
+        </div>
+      );
+    else {
+      return (
+        <div style={{ color: "hsl(var(--red-accent600))", display: "inline" }}>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-x"
+            viewBox="0 0 16 16"
+          >
+            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
+          </svg>
+        </div>
+      );
+    }
+  }
 
   function createNewStudent() {
     var student_form_data = Object.keys(student_data);
@@ -44,6 +86,16 @@ export default function AddStudent() {
       student_data.program_enrolled == ""
     ) {
       toast.error("Program enrolled cannot be empty");
+      return;
+    }
+
+    if (
+      !password_validation_data.has_digit ||
+      !password_validation_data.has_upper_case ||
+      !password_validation_data.has_special_char ||
+      !password_validation_data.has_length
+    ) {
+      toast.error("Password does not satisfy given constraints");
       return;
     }
 
@@ -124,14 +176,46 @@ export default function AddStudent() {
           <input
             type="password"
             required={true}
-            value={student_data.password}
             id="password"
             name="password"
-            onChange={(e) =>
-              setStudentData({ ...student_data, password: e.target.value })
-            }
+            onChange={(e) => {
+              setStudentData({ ...student_data, password: e.target.value });
+
+              setPasswordValidationData(
+                PasswordValidator.Validate(e.target.value)
+              );
+            }}
           ></input>
           <span>Password</span>
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-evenly",
+            marginBottom: " calc(var(--default-margin) * 15)",
+          }}
+        >
+          <div>
+            {password_validation_icon(password_validation_data.has_digit)}
+            <span>Contains a digit</span>
+          </div>
+          <div>
+            {password_validation_icon(password_validation_data.has_upper_case)}
+            <span>Contains a upper case letter</span>
+          </div>
+          <div>
+            {password_validation_icon(
+              password_validation_data.has_special_char
+            )}
+            <span>
+              Contains a special character [!, @, #, $, %, ^, &, *, (, )]
+            </span>
+          </div>
+          <div>
+            {password_validation_icon(password_validation_data.has_length)}
+            <span>Has 8-16 characters</span>
+          </div>
         </div>
 
         <select
