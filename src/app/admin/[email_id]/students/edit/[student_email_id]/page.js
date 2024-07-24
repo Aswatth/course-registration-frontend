@@ -7,6 +7,7 @@ import { useRouter, useParams } from "next/navigation";
 import style from "./edit_student.module.css";
 import toast from "react-hot-toast";
 import { PROGRAM_LIST } from "@/app/(utils)/constants";
+import { checkAuth } from "@/app/(utils)/auth";
 
 export default function EditStudent() {
   const [student_data, setStudentData] = useState({});
@@ -14,9 +15,14 @@ export default function EditStudent() {
   const router = useRouter();
 
   useEffect(() => {
-    var email_id = decodeURIComponent(params.student_email_id);
-    admin_client.GetStudent(email_id).then((value) => {
-      setStudentData(value);
+    var email_id = decodeURIComponent(params.email_id);
+    var student_email_id = decodeURIComponent(params.student_email_id);
+    checkAuth("ADMIN", email_id).then((value) => {
+      if (value) {
+        admin_client.GetStudent(student_email_id).then((value) => {
+          setStudentData(value);
+        });
+      }
     });
   }, []);
 

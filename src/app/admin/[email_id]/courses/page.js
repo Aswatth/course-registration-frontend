@@ -1,11 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
-import * as utils from "@/app/(utils)/auth";
 import * as admin_client from "@/app/(clients)/admin/course_client";
 import { useParams, useRouter } from "next/navigation";
 
 import style from "./courses_page.module.css";
 import toast from "react-hot-toast";
+import { checkAuth } from "@/app/(utils)/auth";
 
 export default function CoursePage() {
   const router = useRouter();
@@ -13,7 +13,7 @@ export default function CoursePage() {
   const [course_list, setCourseList] = useState([]);
   useEffect(() => {
     const email_id = decodeURIComponent(params.email_id);
-    utils.checkAuth("ADMIN", email_id).then((value) => {
+    checkAuth("ADMIN", email_id).then((value) => {
       if (value == true) {
         admin_client.GetAllCourses().then((value) => {
           setCourseList(value);

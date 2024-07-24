@@ -7,6 +7,7 @@ import { useRouter, useParams } from "next/navigation";
 import style from "./edit_professor.module.css";
 import toast from "react-hot-toast";
 import { DEPARTMENT_LIST, DESIGNATION_LIST } from "@/app/(utils)/constants";
+import { checkAuth } from "@/app/(utils)/auth";
 
 export default function EditProfessor() {
   const [professor_data, setProfessorData] = useState({});
@@ -14,9 +15,14 @@ export default function EditProfessor() {
   const router = useRouter();
 
   useEffect(() => {
-    var email_id = decodeURIComponent(params.professor_email_id);
-    admin_client.GetProfessor(email_id).then((value) => {
-      setProfessorData(value);
+    var email_id = decodeURIComponent(params.email_id);
+    var professor_email_id = decodeURIComponent(params.professor_email_id);
+    checkAuth("ADMIN", email_id).then((value) => {
+      if (value) {
+        admin_client.GetProfessor(professor_email_id).then((value) => {
+          setProfessorData(value);
+        });
+      }
     });
   }, []);
 

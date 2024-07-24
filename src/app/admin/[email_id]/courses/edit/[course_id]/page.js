@@ -6,6 +6,7 @@ import { useParams, useRouter } from "next/navigation";
 import style from "./edit_course.module.css";
 import toast from "react-hot-toast";
 import { DEPARTMENT_LIST } from "@/app/(utils)/constants";
+import { checkAuth } from "@/app/(utils)/auth";
 
 export default function EditCourse() {
   const router = useRouter();
@@ -14,9 +15,14 @@ export default function EditCourse() {
   const params = useParams();
 
   useEffect(() => {
-    var course_id = decodeURIComponent(params.course_id);
-    admin_client.GetCourse(course_id).then((value) => {
-      setCourse(value);
+    var email_id = decodeURIComponent(params.email_id);
+    checkAuth("ADMIN", email_id).then((value) => {
+      if (value) {
+        var course_id = decodeURIComponent(params.course_id);
+        admin_client.GetCourse(course_id).then((value) => {
+          setCourse(value);
+        });
+      }
     });
   }, []);
 

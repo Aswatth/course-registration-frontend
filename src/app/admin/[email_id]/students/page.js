@@ -1,11 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
-import * as utils from "@/app/(utils)/auth";
 import * as admin_client from "@/app/(clients)/admin/student_client";
 import { useParams, useRouter } from "next/navigation";
 
 import style from "./students.module.css";
 import toast from "react-hot-toast";
+import { checkAuth } from "@/app/(utils)/auth";
 
 export default function StudentPage() {
   const router = useRouter();
@@ -14,7 +14,7 @@ export default function StudentPage() {
 
   useEffect(() => {
     const email_id = decodeURIComponent(params.email_id);
-    utils.checkAuth("ADMIN", email_id).then(() => {
+    checkAuth("ADMIN", email_id).then(() => {
       admin_client.GetAllStudents().then((value) => {
         if (value != null) {
           setStudentList(value);

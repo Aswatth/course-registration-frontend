@@ -1,15 +1,22 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as admin_client from "@/app/(clients)/admin/course_client";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 import style from "./add_courses.module.css";
 import toast from "react-hot-toast";
 import { DEPARTMENT_LIST } from "@/app/(utils)/constants";
+import { checkAuth } from "@/app/(utils)/auth";
 
 export default function AddCourse() {
   const router = useRouter();
+  const params = useParams();
   const [new_course, setCourse] = useState({});
+
+  useEffect(() => {
+    var email_id = decodeURIComponent(params.email_id);
+    checkAuth("ADMIN", email_id).then(() => {});
+  }, []);
 
   function createNewCourse() {
     //Validation

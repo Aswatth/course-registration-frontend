@@ -1,8 +1,8 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import * as admin_client from "@/app/(clients)/admin/student_client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import style from "./add_student.module.css";
 import toast from "react-hot-toast";
@@ -10,13 +10,21 @@ import toast from "react-hot-toast";
 import * as PasswordValidator from "@/app/(utils)/password_validator";
 
 import { PROGRAM_LIST } from "@/app/(utils)/constants";
+import { checkAuth } from "@/app/(utils)/auth";
 
 export default function AddStudent() {
   const router = useRouter();
+  const params = useParams();
+
   const [password_validation_data, setPasswordValidationData] = useState(
     PasswordValidator.InitialValue()
   );
   const [student_data, setStudentData] = useState({});
+
+  useEffect(() => {
+    var email_id = decodeURIComponent(params.email_id);
+    checkAuth("ADMIN", email_id).then(() => {});
+  }, []);
 
   function password_validation_icon(value) {
     if (value)
