@@ -62,6 +62,47 @@ export default function ProfessorsPage() {
     return <div>No content</div>;
   };
 
+  const show_offered_course = (data) => {
+    if (data == null) {
+      toast("Not offering any course");
+      return;
+    }
+    toast((t) => (
+      <div>
+        <div
+          style={{ cursor: "pointer", display: "flex", justifyContent: "end" }}
+          onClick={() => {
+            toast.dismiss(t.id);
+          }}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-x"
+            viewBox="0 0 16 16"
+          >
+            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
+          </svg>
+        </div>
+        <table>
+          <tr>
+            <th>Course Id</th>
+            <th>CRN</th>
+          </tr>
+          {data.map((m) => {
+            return (
+              <tr>
+                <td>{m.course_id}</td>
+                <td>{m.crn}</td>
+              </tr>
+            );
+          })}
+        </table>
+      </div>
+    ));
+  };
   const professor_content = () => {
     return (
       <div className={style["content"]}>
@@ -81,6 +122,7 @@ export default function ProfessorsPage() {
               <th>Email Id</th>
               <th>Designation</th>
               <th>Department</th>
+              <th>Offered courses</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -93,6 +135,16 @@ export default function ProfessorsPage() {
                   <td>{m.email_id}</td>
                   <td>{m.designation}</td>
                   <td>{m.department}</td>
+                  <td
+                    style={{
+                      background: "hsl(var(--base-color800))",
+                      color: "white",
+                      cursor: "pointer",
+                    }}
+                    onClick={() => show_offered_course(m.offered_courses)}
+                  >
+                    {m.offered_courses != null ? m.offered_courses.length : 0}
+                  </td>
                   <td>
                     <div className={style["professor-actions"]}>
                       <button
