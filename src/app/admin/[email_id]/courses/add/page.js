@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 
 import style from "./add_courses.module.css";
 import toast from "react-hot-toast";
+import { DEPARTMENT_LIST } from "@/app/(utils)/constants";
 
 export default function AddCourse() {
   const router = useRouter();
@@ -130,18 +131,22 @@ export default function AddCourse() {
           ></input>
           <span>Credits</span>
         </div>
-        <div className={style["input-decoration"]}>
-          <input
-            type="text"
-            id="department"
-            name="department"
-            required={true}
-            onChange={(e) => {
-              setCourse({ ...new_course, department: e.target.value });
-            }}
-          ></input>
-          <span>Department</span>
-        </div>
+        <select
+          className={style["dropdown"]}
+          onChange={(e) => {
+            setCourse({
+              ...new_course,
+              department: e.target.value,
+            });
+          }}
+        >
+          <option value="" selected disabled hidden>
+            Select department
+          </option>
+          {DEPARTMENT_LIST.map((d) => {
+            return <option value={d}>{d}</option>;
+          })}
+        </select>
 
         <button
           className={style["create-course"]}

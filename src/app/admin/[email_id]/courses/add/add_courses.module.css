@@ -65,6 +65,23 @@
   border: solid 2px hsl(var(--base-color800), 0.2);
 }
 
+.dropdown {
+  width: 100%;
+  border-radius: calc(var(--default-border-radius) * 4);
+  padding: calc(var(--default-padding) * 4);
+  background-color: hsl(var(--grey200));
+  outline: none;
+  color: hsl(var(--base-color800));
+  margin-bottom: calc(var(--default-margin) * 15);
+  font-size: 0.8em;
+  font-weight: bold;
+}
+
+.dropdown option {
+  margin-bottom: calc(var(--default-margin) * 15);
+  font-weight: bold;
+}
+
 .create-course {
   padding: calc(var(--default-padding) * 4);
   font-size: large;
