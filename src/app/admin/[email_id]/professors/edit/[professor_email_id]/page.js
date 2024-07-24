@@ -6,6 +6,7 @@ import { useRouter, useParams } from "next/navigation";
 
 import style from "./edit_professor.module.css";
 import toast from "react-hot-toast";
+import { DEPARTMENT_LIST, DESIGNATION_LIST } from "@/app/(utils)/constants";
 
 export default function EditProfessor() {
   const [professor_data, setProfessorData] = useState({});
@@ -107,39 +108,41 @@ export default function EditProfessor() {
           <span>Email Id</span>
         </div>
 
-        <div className={style["input-decoration"]}>
-          <input
-            type="text"
-            required={true}
-            value={professor_data.designation}
-            id="designation"
-            name="designation"
-            onChange={(e) =>
-              setProfessorData({
-                ...professor_data,
-                designation: e.target.value,
-              })
-            }
-          ></input>
-          <span>Designation</span>
-        </div>
+        <select
+          className={style["dropdown"]}
+          value={professor_data.designation}
+          onChange={(e) => {
+            setProfessorData({
+              ...professor_data,
+              designation: e.target.value,
+            });
+          }}
+        >
+          <option value="" selected disabled hidden>
+            Select designation
+          </option>
+          {DESIGNATION_LIST.map((d) => {
+            return <option value={d}>{d}</option>;
+          })}
+        </select>
 
-        <div className={style["input-decoration"]}>
-          <input
-            type="text"
-            required={true}
-            value={professor_data.department}
-            id="department"
-            name="department"
-            onChange={(e) =>
-              setProfessorData({
-                ...professor_data,
-                department: e.target.value,
-              })
-            }
-          ></input>
-          <span>Department</span>
-        </div>
+        <select
+          className={style["dropdown"]}
+          value={professor_data.department}
+          onChange={(e) => {
+            setProfessorData({
+              ...professor_data,
+              department: e.target.value,
+            });
+          }}
+        >
+          <option value="" selected disabled hidden>
+            Select department
+          </option>
+          {DEPARTMENT_LIST.map((d) => {
+            return <option value={d}>{d}</option>;
+          })}
+        </select>
 
         <button
           className={style["save-professor"]}

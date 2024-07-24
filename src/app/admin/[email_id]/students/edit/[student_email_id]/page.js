@@ -6,6 +6,7 @@ import { useRouter, useParams } from "next/navigation";
 
 import style from "./edit_student.module.css";
 import toast from "react-hot-toast";
+import { PROGRAM_LIST } from "@/app/(utils)/constants";
 
 export default function EditStudent() {
   const [student_data, setStudentData] = useState({});
@@ -102,22 +103,23 @@ export default function EditStudent() {
           <span>Email Id</span>
         </div>
 
-        <div className={style["input-decoration"]}>
-          <input
-            type="text"
-            required={true}
-            value={student_data.program_enrolled}
-            id="program_enrolled"
-            name="program_enrolled"
-            onChange={(e) =>
-              setStudentData({
-                ...student_data,
-                program_enrolled: e.target.value,
-              })
-            }
-          ></input>
-          <span>Program enrolled</span>
-        </div>
+        <select
+          className={style["dropdown"]}
+          value={student_data.program_enrolled}
+          onChange={(e) => {
+            setStudentData({
+              ...student_data,
+              program_enrolled: e.target.value,
+            });
+          }}
+        >
+          <option value="" selected disabled hidden>
+            Select program
+          </option>
+          {PROGRAM_LIST.map((p) => {
+            return <option value={p}>{p}</option>;
+          })}
+        </select>
 
         <button
           className={style["save-student"]}
