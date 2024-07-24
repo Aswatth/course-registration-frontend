@@ -1,3 +1,48 @@
+
+<h1>Course Registration System</h1>
+<p>This repo is frontend application for the course-registration-system implemented using Next.js a React framework.</p>
+
+<h3>How it works</h3>
+<hr>
+
+<img src="readme_images/login_page.png">
+This would be the very first screen where all users would login using their email-id and password.
+Based on their user-type they would be routed to respective homepages.
+Unauthorized access to pages would revert back to login page.
+
+<b>User types:</b>
+<ul>
+  <li>Admin</li>
+  <li>Professor</li>
+  <li>Student</li>
+</ul>
+
+<h3>Admin</h3>
+<hr>
+<img src="readme_images/admin/admin_home_page.png">
+This would be the home page if the logged in user is an admin.
+
+Admin would have the ability to perform CRUD operation on 
+<ul>
+  <li>Courses</li>
+  <li>Professor profiles</li>
+  <li>Student profiles</li>
+</ul>
+with some exceptions like:
+<ul>
+  <li>Cannot delete courses if they are being offered</li>
+  <li>Cannot delete delete professor profile if they are offering a course</li>
+  <li>Cannot delete student profile if they are registered for atleast one course</li>
+</ul>
+
+<li>Courses:</li>
+<img src="readme_images/admin/course/1_admin_course_page.png">
+This pages would display list of all courses that are created.
+
+<hr>
+
+<h1>Running the front-end application</h1>
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
