@@ -2,7 +2,9 @@
 
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { GetStudentProfile } from "@/app/(clients)/student/student_profile";
 import * as student_client from "@/app/(clients)/student/register_course_client";
+import * as utils from "@/app/(utils)/auth";
 import { logout } from "@/app/(clients)/login_client";
 
 import style from "./student.module.css";
@@ -12,20 +14,30 @@ export default function StudentHomePage() {
   const router = useRouter();
   const params = useParams();
 
+  const [student_profile, setStudentProfile] = useState({});
   const [registered_courses, setRegisteredCourses] = useState([]);
   const [register_crns, setRegisteredCRNs] = useState([]);
 
   useEffect(() => {
-    student_client
-      .GetRegisteredCourses(decodeURIComponent(params.email_id))
-      .then((data) => {
-        setRegisteredCourses(data);
-        var crn_list = [];
-        data.map((m) => {
-          crn_list.push(m.offered_course.crn);
+    var email_id = decodeURIComponent(params.email_id);
+    utils.checkAuth("STUDENT", email_id).then((value) => {
+      if (value == true) {
+        GetStudentProfile(email_id).then((value) => {
+          setStudentProfile(value);
         });
-        setRegisteredCRNs(crn_list);
-      });
+
+        student_client
+          .GetRegisteredCourses(decodeURIComponent(params.email_id))
+          .then((data) => {
+            setRegisteredCourses(data);
+            var crn_list = [];
+            data.map((m) => {
+              crn_list.push(m.offered_course.crn);
+            });
+            setRegisteredCRNs(crn_list);
+          });
+      }
+    });
   }, []);
 
   function withdrawCourse(crn) {
@@ -130,7 +142,9 @@ export default function StudentHomePage() {
   return (
     <div className={style["page"]}>
       <div className={style["header"]}>
-        <h1>Welcome Student</h1>
+        <h1>
+          Welcome {student_profile.last_name}, {student_profile.first_name}
+        </h1>
         <button
           className={style["header-button"]}
           onClick={() => {
