@@ -4,11 +4,11 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { GetStudentProfile } from "@/app/(clients)/student/student_profile";
 import * as student_client from "@/app/(clients)/student/register_course_client";
-import * as utils from "@/app/(utils)/auth";
 import { logout } from "@/app/(clients)/login_client";
 
 import style from "./student.module.css";
 import toast from "react-hot-toast";
+import { checkAuth } from "@/app/(utils)/auth";
 
 export default function StudentHomePage() {
   const router = useRouter();
@@ -20,7 +20,7 @@ export default function StudentHomePage() {
 
   useEffect(() => {
     var email_id = decodeURIComponent(params.email_id);
-    utils.checkAuth("STUDENT", email_id).then((value) => {
+    checkAuth("STUDENT", email_id).then((value) => {
       if (value == true) {
         GetStudentProfile(email_id).then((value) => {
           setStudentProfile(value);

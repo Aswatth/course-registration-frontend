@@ -6,6 +6,7 @@ import { useParams, useRouter } from "next/navigation";
 
 import style from "./browse_courses.module.css";
 import toast from "react-hot-toast";
+import { checkAuth } from "@/app/(utils)/auth";
 
 export default function BrowseOfferedCourses() {
   const params = useParams();
@@ -15,18 +16,24 @@ export default function BrowseOfferedCourses() {
   const [registered_courses, setRegisteredCourses] = useState([]);
 
   useEffect(() => {
-    student_client.GetAllOfferedCourses().then((data) => {
-      setOfferedCourses(data);
-    });
-    student_client
-      .GetRegisteredCourses(decodeURIComponent(params.email_id))
-      .then((data) => {
-        var crn_list = [];
-        data.map((m) => {
-          crn_list.push(m.offered_course.crn);
+    var email_id = decodeURIComponent(params.email_id);
+
+    checkAuth("STUDENT", email_id).then((value) => {
+      if (value) {
+        student_client.GetAllOfferedCourses().then((data) => {
+          setOfferedCourses(data);
         });
-        setRegisteredCourses(crn_list);
-      });
+        student_client
+          .GetRegisteredCourses(decodeURIComponent(params.email_id))
+          .then((data) => {
+            var crn_list = [];
+            data.map((m) => {
+              crn_list.push(m.offered_course.crn);
+            });
+            setRegisteredCourses(crn_list);
+          });
+      }
+    });
   }, []);
 
   function saveRegisteredCourses() {
