@@ -78,6 +78,7 @@ export default function StudentPage() {
               <th>Last name</th>
               <th>Email Id</th>
               <th>Program enrolled</th>
+              <th>Registered courses</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -89,6 +90,7 @@ export default function StudentPage() {
                   <td>{m.last_name}</td>
                   <td>{m.email_id}</td>
                   <td>{m.program_enrolled}</td>
+                  <td>{m.registered_courses}</td>
                   <td>
                     <div className={style["student-actions"]}>
                       <button
