@@ -35,7 +35,7 @@ with some exceptions like:
   <li>Cannot delete student profile if they are registered for atleast one course</li>
 </ul>
 
-<li>Courses:</li>
+<h3>Courses:</h3>
 <img src="readme_images/admin/course/1_admin_course_page.png">
 This pages would display list of all courses that are created. Clicking on <i>Add course</i> would navigate to below page.
 <img src="readme_images/admin/course/2_add_course.png">
@@ -55,10 +55,29 @@ Successful update would go back to course page displaying the updated course
 
 Similar to edit, courses can be deleted by clicking onr respective <i>Delete</i> button which would then ask for confirmation for the same.
 <img src="readme_images/admin/course/8_delete_course.png">
-Successful deletion would display updated list of courses
+Successful deletion would display updated list of courses. <i><b>Note:</b> Courses that are offered by a professor cannot be deleted.</i>
 <img src="readme_images/admin/course/9_deleted_course.png">
 
-<i><b>Note:</b> Courses that are offered by a professor cannot be deleted.
+<h3>Professor:</h3>
+<img src="readme_images/admin/professor/1_professor.png">
+This pages would display list of all professor profiles that were created. Clicking on <i>Add professor</i> would navigate to below page.
+<img src="readme_images/admin/professor/2_add_professor.png">
+Where admins can create new professor profiles with respective data. All fields are mandatory. Duplicate email_ids are not allowed.
+<img src="readme_images/admin/professor/3_new_professor.png">
+Upon successful creation the new professor profile would be displayed.
+<img src="readme_images/admin/professor/4_new_professor.png">
+
+Created professor profiles can then be edited by clicking on respective <i>Edit</i> button which would navigate to edit page.
+<img src="readme_images/admin/professor/6_edit_professor.png">
+All fields except email_id can be updated with valid values. <br>
+Successful update would go back to professor page displaying the updated professor profile data
+<img src="readme_images/admin/professor/7_updated_professor.png">
+
+Similar to edit, professor profiles can be deleted by clicking onr respective <i>Delete</i> button which would then ask for confirmation for the same.
+<img src="readme_images/admin/professor/8_delete_professor.png">
+Successful deletion would display updated list of professor profiles.
+<i><b>Note:</b> Professors who are offering a course cannot be deleted.
+<img src="readme_images/admin/professor/9_delete_failure.png">
 
 <hr>
 
