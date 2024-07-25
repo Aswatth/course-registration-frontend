@@ -102,7 +102,7 @@ Successful deletion would display updated list of student profiles.
 <hr>
 <h3>Professor</h3>
 <img src="readme_images/professor/0_professor_page.png">
-This will be the landing of professors displaying list of offered courses the logged in professor has offered.
+This will be the landing page for professors displaying list of offered courses the logged in professor has offered.
 On clicking on <i>Offer a new course</i> will navigate to the following page:
 <img src="readme_images/professor/1_available_course.png">
 Displaying list of courses available for offering.
@@ -129,7 +129,30 @@ Offered courses can be deleted if they are not registered by any students
 <img src="readme_images/professor/10_delete_offered_course.png">
 <img src="readme_images/professor/11_delete_offered_course_failure.png">
 <hr>
-<h1>Running the front-end application</h1>
+
+<h3>Student</h3>
+This will be the landing page for students displaying list of registered courses for the logged in student.
+<img src="readme_images/student/0_student_page.png">
+
+Clicking on <i>Browse courses</i> would navigate to a page displaying list of all offered courses on the left and registered courses on the right.
+<img src="readme_images/student/1_browse_courses.png">
+A student cannot register for a course more than once. Doing so would result in an error.
+<img src="readme_images/student/2_register_error.png">
+
+After successful registration the home page displays the updated list of registered courses.
+<img src="readme_images/student/3_register_courses.png">
+<img src="readme_images/student/4_registered_courses.png">
+
+Students can withdraw from the registered courses either by clicking on <i>Widhtraw</i> button in the home page
+<img src="readme_images/student/5_withdraw_course.png">
+or they an navigate to browse courses page and remove registered courses and save.
+<img src="readme_images/student/6_remove_course.png">
+
+Home page then displays the updated list of registered courses.
+<img src="readme_images/student/7_updated_courses.png">
+
+<hr>
+<h1>Running the application</h1>
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
