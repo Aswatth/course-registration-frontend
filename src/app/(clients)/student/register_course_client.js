@@ -69,7 +69,7 @@ export const UpdateRegisteredCourses = async (
   var body = null;
   try {
     const response = await fetch(
-      API + "/register_course?email_id=" + email_id,
+      API + "/register_course/" + email_id,
       {
         method: "PUT",
         headers: {
