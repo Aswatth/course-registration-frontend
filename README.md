@@ -1,6 +1,6 @@
 <h1>Course Registration System</h1>
 <p>This repo is frontend application for the course-registration-system implemented using Next.js a React framework.</p>
-
+The <a href="https://github.com/Aswatth/course-registration-api-gateway">Backend</a> was implemented using GoLang, MySQL and MongoDB.
 <h3>How it works</h3>
 <hr>
 
