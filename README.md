@@ -96,11 +96,39 @@ Successful update would go back to professor page displaying the updated profess
 Similar to edit, student profiles can be deleted by clicking onr respective <i>Delete</i> button which would then ask for confirmation for the same.
 <img src="readme_images/admin/student/7_delete_student.png">
 Successful deletion would display updated list of student profiles.
-<i><b>Note:</b> Students who are registered for a course cannot be deleted.
+<i><b>Note:</b></i> Students who are registered for a course cannot be deleted.
 <img src="readme_images/admin/student/8_delete_student_failure.png">
 
 <hr>
+<h3>Professor</h3>
+<img src="readme_images/professor/0_professor_page.png">
+This will be the landing of professors displaying list of offered courses the logged in professor has offered.
+On clicking on <i>Offer a new course</i> will navigate to the following page:
+<img src="readme_images/professor/1_available_course.png">
+Displaying list of courses available for offering.
+On clicking on <i>Offer</i> will display UI for adding more information regarding offering course.
+<img src="readme_images/professor/2_offer_course.png">
+Professors can add day, start and end times.
+<img src="readme_images/professor/3_adding_day.png">
+Professors are not allowed to add duplicate days.
+<img src="readme_images/professor/4_adding_duplicate_day.png">
 
+After successfully offering a course a notification would be displayed and home page would display the newly offered courses.
+<img src="readme_images/professor/5_successfully_offered_course.png">
+<img src="readme_images/professor/6_offered_course.png">
+
+Offered courses can be edited by clicking on respective <i>Edit</i> button.
+<img src="readme_images/professor/7_edit_offered_course.png">
+
+While editing offered_course only day and timing can be changed.
+<img src="readme_images/professor/8_update_offered_course.png">
+After successful update the home page would display the updated infomration.
+<img src="readme_images/professor/9_updated_offered_course.png">
+
+Offered courses can be deleted if they are not registered by any students
+<img src="readme_images/professor/10_delete_offered_course.png">
+<img src="readme_images/professor/11_delete_offered_course_failure.png">
+<hr>
 <h1>Running the front-end application</h1>
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
