@@ -152,6 +152,17 @@ Home page then displays the updated list of registered courses.
 <img src="readme_images/student/7_updated_courses.png">
 
 <hr>
+
+Each user can update their password by clicking on <i>Change password</i> tab or button in their home page, which would then navigate to the following page.
+<img src="readme_images/update_password_page.png">
+Constraints:
+<ul>
+  <li>New and old password cannot be same</li>
+  <li>New password and confirmed password should match</li>
+  <li>Should satisfy the password requirements</li>
+</ul>
+
+<hr>
 <h1>Running the application</h1>
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
