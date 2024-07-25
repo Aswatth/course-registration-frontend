@@ -1,6 +1,6 @@
 <h1>Course Registration System</h1>
-<p>This repo is frontend application for the course-registration-system implemented using Next.js a React framework.</p>
-The <a href="https://github.com/Aswatth/course-registration-api-gateway">Backend</a> was implemented using GoLang, MySQL and MongoDB.
+<p>This repo is frontend application for the course-registration-system implemented using <a href="https://nextjs.org/">Next.js</a> a React framework.</p>
+The <a href="https://github.com/Aswatth/course-registration-api-gateway">backend</a> was implemented using GoLang(using <a href="https://gin-gonic.com/">gin-gonic</a> and <a href="https://gorm.io/index.html">GORM</a> frameworks), MySQL and MongoDB.
 <h3>How it works</h3>
 <hr>
 
