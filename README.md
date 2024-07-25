@@ -1,4 +1,3 @@
-
 <h1>Course Registration System</h1>
 <p>This repo is frontend application for the course-registration-system implemented using Next.js a React framework.</p>
 
@@ -76,8 +75,29 @@ Successful update would go back to professor page displaying the updated profess
 Similar to edit, professor profiles can be deleted by clicking onr respective <i>Delete</i> button which would then ask for confirmation for the same.
 <img src="readme_images/admin/professor/8_delete_professor.png">
 Successful deletion would display updated list of professor profiles.
-<i><b>Note:</b> Professors who are offering a course cannot be deleted.
+<i><b>Note:</b> Professors who are offering a course cannot be deleted.</i>
 <img src="readme_images/admin/professor/9_delete_failure.png">
+
+<h3>Student:</h3>
+<img src="readme_images/admin/student/1_student_page.png">
+This pages would display list of all student profiles that were created. Clicking on <i>Add student</i> would navigate to below page.
+<img src="readme_images/admin/student/2_add_student_page.png">
+Where admins can create new student profiles with respective data. All fields are mandatory. Duplicate email_ids are not allowed.
+<img src="readme_images/admin/student/3_new_student_data.png">
+Upon successful creation the new student profile would be displayed.
+<img src="readme_images/admin/student/4_new_student.png">
+
+Created student profiles can then be edited by clicking on respective <i>Edit</i> button which would navigate to edit page.
+<img src="readme_images/admin/student/5_edit_student_page.png">
+All fields except email_id can be updated with valid values. <br>
+Successful update would go back to professor page displaying the updated professor profile data
+<img src="readme_images/admin/student/6_edit student.png">
+
+Similar to edit, student profiles can be deleted by clicking onr respective <i>Delete</i> button which would then ask for confirmation for the same.
+<img src="readme_images/admin/student/7_delete_student.png">
+Successful deletion would display updated list of student profiles.
+<i><b>Note:</b> Students who are registered for a course cannot be deleted.
+<img src="readme_images/admin/student/8_delete_student_failure.png">
 
 <hr>
 
