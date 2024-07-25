@@ -37,7 +37,28 @@ with some exceptions like:
 
 <li>Courses:</li>
 <img src="readme_images/admin/course/1_admin_course_page.png">
-This pages would display list of all courses that are created.
+This pages would display list of all courses that are created. Clicking on <i>Add course</i> would navigate to below page.
+<img src="readme_images/admin/course/2_add_course.png">
+Where admins can create new courses with respective data. All fields are mandatory. Duplicate course_ids are not allowed. Invalid/ empty fields are notified like below:
+<img src="readme_images/admin/course/3_add_course_error.png">
+
+Upon successful creation the new course would be displayed on course page
+<img src="readme_images/admin/course/4_new_course.png">
+
+Created course can then be edited by clicking on respective <i>Edit</i> button which would navigate to edit page.
+<img src="readme_images/admin/course/5_edit_course.png">
+All fields except course_id can be updated with valid values
+<img src="readme_images/admin/course/6_edited_course.png">
+
+Successful update would go back to course page displaying the updated course
+<img src="readme_images/admin/course/7_updated_course.png">
+
+Similar to edit, courses can be deleted by clicking onr respective <i>Delete</i> button which would then ask for confirmation for the same.
+<img src="readme_images/admin/course/8_delete_course.png">
+Successful deletion would display updated list of courses
+<img src="readme_images/admin/course/9_deleted_course.png">
+
+<i><b>Note:</b> Courses that are offered by a professor cannot be deleted.
 
 <hr>
 
